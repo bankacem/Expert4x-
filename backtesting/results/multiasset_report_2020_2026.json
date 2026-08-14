@@ -1,0 +1,407 @@
+{
+  "generated_at": "2026-08-14T16:40:09.444165",
+  "report": {
+    "FOREX": {
+      "EURUSD": {
+        "ECN_RAW_ULTRA_FAST": {
+          "symbol": "EURUSD",
+          "asset_type": "forex",
+          "broker_profile": "حساب ECN الخام (أسرع تنفيذ + أقل سبريد)",
+          "initial_balance": 10000.0,
+          "final_balance": 9946.5,
+          "profit_loss": -53.5,
+          "roi_percent": -0.54,
+          "total_trades": 5,
+          "winning_trades": 3,
+          "losing_trades": 2,
+          "win_rate_percent": 60.0,
+          "max_drawdown_percent": 1.52
+        },
+        "STANDARD_PRO": {
+          "symbol": "EURUSD",
+          "asset_type": "forex",
+          "broker_profile": "حساب قياسي احترافي (Standard Pro)",
+          "initial_balance": 10000.0,
+          "final_balance": 9950.0,
+          "profit_loss": -50.0,
+          "roi_percent": -0.5,
+          "total_trades": 5,
+          "winning_trades": 3,
+          "losing_trades": 2,
+          "win_rate_percent": 60.0,
+          "max_drawdown_percent": 1.5
+        },
+        "HIGH_SPREAD_SLOW": {
+          "symbol": "EURUSD",
+          "asset_type": "forex",
+          "broker_profile": "وسيط تقليدي بطيء / سبريد مرتفع",
+          "initial_balance": 10000.0,
+          "final_balance": 9945.0,
+          "profit_loss": -55.0,
+          "roi_percent": -0.55,
+          "total_trades": 5,
+          "winning_trades": 3,
+          "losing_trades": 2,
+          "win_rate_percent": 60.0,
+          "max_drawdown_percent": 1.53
+        }
+      },
+      "GBPUSD": {
+        "ECN_RAW_ULTRA_FAST": {
+          "symbol": "GBPUSD",
+          "asset_type": "forex",
+          "broker_profile": "حساب ECN الخام (أسرع تنفيذ + أقل سبريد)",
+          "initial_balance": 10000.0,
+          "final_balance": 9899.3,
+          "profit_loss": -100.7,
+          "roi_percent": -1.01,
+          "total_trades": 1,
+          "winning_trades": 0,
+          "losing_trades": 1,
+          "win_rate_percent": 0.0,
+          "max_drawdown_percent": 1.01
+        },
+        "STANDARD_PRO": {
+          "symbol": "GBPUSD",
+          "asset_type": "forex",
+          "broker_profile": "حساب قياسي احترافي (Standard Pro)",
+          "initial_balance": 10000.0,
+          "final_balance": 9900.0,
+          "profit_loss": -100.0,
+          "roi_percent": -1.0,
+          "total_trades": 1,
+          "winning_trades": 0,
+          "losing_trades": 1,
+          "win_rate_percent": 0.0,
+          "max_drawdown_percent": 1.0
+        },
+        "HIGH_SPREAD_SLOW": {
+          "symbol": "GBPUSD",
+          "asset_type": "forex",
+          "broker_profile": "وسيط تقليدي بطيء / سبريد مرتفع",
+          "initial_balance": 10000.0,
+          "final_balance": 9899.0,
+          "profit_loss": -101.0,
+          "roi_percent": -1.01,
+          "total_trades": 1,
+          "winning_trades": 0,
+          "losing_trades": 1,
+          "win_rate_percent": 0.0,
+          "max_drawdown_percent": 1.01
+        }
+      },
+      "USDJPY": {
+        "ECN_RAW_ULTRA_FAST": {
+          "symbol": "USDJPY",
+          "asset_type": "forex",
+          "broker_profile": "حساب ECN الخام (أسرع تنفيذ + أقل سبريد)",
+          "initial_balance": 10000.0,
+          "final_balance": 9995.8,
+          "profit_loss": -4.2,
+          "roi_percent": -0.04,
+          "total_trades": 6,
+          "winning_trades": 4,
+          "losing_trades": 2,
+          "win_rate_percent": 66.67,
+          "max_drawdown_percent": 1.52
+        },
+        "STANDARD_PRO": {
+          "symbol": "USDJPY",
+          "asset_type": "forex",
+          "broker_profile": "حساب قياسي احترافي (Standard Pro)",
+          "initial_balance": 10000.0,
+          "final_balance": 10000.0,
+          "profit_loss": 0.0,
+          "roi_percent": 0.0,
+          "total_trades": 6,
+          "winning_trades": 4,
+          "losing_trades": 2,
+          "win_rate_percent": 66.67,
+          "max_drawdown_percent": 1.5
+        },
+        "HIGH_SPREAD_SLOW": {
+          "symbol": "USDJPY",
+          "asset_type": "forex",
+          "broker_profile": "وسيط تقليدي بطيء / سبريد مرتفع",
+          "initial_balance": 10000.0,
+          "final_balance": 9994.0,
+          "profit_loss": -6.0,
+          "roi_percent": -0.06,
+          "total_trades": 6,
+          "winning_trades": 4,
+          "losing_trades": 2,
+          "win_rate_percent": 66.67,
+          "max_drawdown_percent": 1.53
+        }
+      }
+    },
+    "STOCKS": {
+      "AAPL": {
+        "ECN_RAW_ULTRA_FAST": {
+          "symbol": "AAPL",
+          "asset_type": "stock",
+          "broker_profile": "حساب ECN الخام (أسرع تنفيذ + أقل سبريد)",
+          "initial_balance": 10000.0,
+          "final_balance": 9928.1,
+          "profit_loss": -71.9,
+          "roi_percent": -0.72,
+          "total_trades": 17,
+          "winning_trades": 9,
+          "losing_trades": 8,
+          "win_rate_percent": 52.94,
+          "max_drawdown_percent": 1.38
+        },
+        "STANDARD_PRO": {
+          "symbol": "AAPL",
+          "asset_type": "stock",
+          "broker_profile": "حساب قياسي احترافي (Standard Pro)",
+          "initial_balance": 10000.0,
+          "final_balance": 9940.0,
+          "profit_loss": -60.0,
+          "roi_percent": -0.6,
+          "total_trades": 17,
+          "winning_trades": 9,
+          "losing_trades": 8,
+          "win_rate_percent": 52.94,
+          "max_drawdown_percent": 1.3
+        },
+        "HIGH_SPREAD_SLOW": {
+          "symbol": "AAPL",
+          "asset_type": "stock",
+          "broker_profile": "وسيط تقليدي بطيء / سبريد مرتفع",
+          "initial_balance": 10000.0,
+          "final_balance": 9923.0,
+          "profit_loss": -77.0,
+          "roi_percent": -0.77,
+          "total_trades": 17,
+          "winning_trades": 9,
+          "losing_trades": 8,
+          "win_rate_percent": 52.94,
+          "max_drawdown_percent": 1.41
+        }
+      },
+      "NVDA": {
+        "ECN_RAW_ULTRA_FAST": {
+          "symbol": "NVDA",
+          "asset_type": "stock",
+          "broker_profile": "حساب ECN الخام (أسرع تنفيذ + أقل سبريد)",
+          "initial_balance": 10000.0,
+          "final_balance": 9985.1,
+          "profit_loss": -14.9,
+          "roi_percent": -0.15,
+          "total_trades": 7,
+          "winning_trades": 4,
+          "losing_trades": 3,
+          "win_rate_percent": 57.14,
+          "max_drawdown_percent": 0.61
+        },
+        "STANDARD_PRO": {
+          "symbol": "NVDA",
+          "asset_type": "stock",
+          "broker_profile": "حساب قياسي احترافي (Standard Pro)",
+          "initial_balance": 10000.0,
+          "final_balance": 9990.0,
+          "profit_loss": -10.0,
+          "roi_percent": -0.1,
+          "total_trades": 7,
+          "winning_trades": 4,
+          "losing_trades": 3,
+          "win_rate_percent": 57.14,
+          "max_drawdown_percent": 0.6
+        },
+        "HIGH_SPREAD_SLOW": {
+          "symbol": "NVDA",
+          "asset_type": "stock",
+          "broker_profile": "وسيط تقليدي بطيء / سبريد مرتفع",
+          "initial_balance": 10000.0,
+          "final_balance": 9933.0,
+          "profit_loss": -67.0,
+          "roi_percent": -0.67,
+          "total_trades": 7,
+          "winning_trades": 3,
+          "losing_trades": 4,
+          "win_rate_percent": 42.86,
+          "max_drawdown_percent": 0.86
+        }
+      },
+      "SPY": {
+        "ECN_RAW_ULTRA_FAST": {
+          "symbol": "SPY",
+          "asset_type": "stock",
+          "broker_profile": "حساب ECN الخام (أسرع تنفيذ + أقل سبريد)",
+          "initial_balance": 10000.0,
+          "final_balance": 9874.6,
+          "profit_loss": -125.4,
+          "roi_percent": -1.25,
+          "total_trades": 22,
+          "winning_trades": 11,
+          "losing_trades": 11,
+          "win_rate_percent": 50.0,
+          "max_drawdown_percent": 1.99
+        },
+        "STANDARD_PRO": {
+          "symbol": "SPY",
+          "asset_type": "stock",
+          "broker_profile": "حساب قياسي احترافي (Standard Pro)",
+          "initial_balance": 10000.0,
+          "final_balance": 9890.0,
+          "profit_loss": -110.0,
+          "roi_percent": -1.1,
+          "total_trades": 22,
+          "winning_trades": 11,
+          "losing_trades": 11,
+          "win_rate_percent": 50.0,
+          "max_drawdown_percent": 1.89
+        },
+        "HIGH_SPREAD_SLOW": {
+          "symbol": "SPY",
+          "asset_type": "stock",
+          "broker_profile": "وسيط تقليدي بطيء / سبريد مرتفع",
+          "initial_balance": 10000.0,
+          "final_balance": 9868.0,
+          "profit_loss": -132.0,
+          "roi_percent": -1.32,
+          "total_trades": 22,
+          "winning_trades": 11,
+          "losing_trades": 11,
+          "win_rate_percent": 50.0,
+          "max_drawdown_percent": 2.02
+        }
+      }
+    },
+    "BONDS": {
+      "TLT": {
+        "ECN_RAW_ULTRA_FAST": {
+          "symbol": "TLT",
+          "asset_type": "bond",
+          "broker_profile": "حساب ECN الخام (أسرع تنفيذ + أقل سبريد)",
+          "initial_balance": 10000.0,
+          "final_balance": 10009.3,
+          "profit_loss": 9.3,
+          "roi_percent": 0.09,
+          "total_trades": 1,
+          "winning_trades": 1,
+          "losing_trades": 0,
+          "win_rate_percent": 100.0,
+          "max_drawdown_percent": 0.09
+        },
+        "STANDARD_PRO": {
+          "symbol": "TLT",
+          "asset_type": "bond",
+          "broker_profile": "حساب قياسي احترافي (Standard Pro)",
+          "initial_balance": 10000.0,
+          "final_balance": 10010.0,
+          "profit_loss": 10.0,
+          "roi_percent": 0.1,
+          "total_trades": 1,
+          "winning_trades": 1,
+          "losing_trades": 0,
+          "win_rate_percent": 100.0,
+          "max_drawdown_percent": 0.1
+        },
+        "HIGH_SPREAD_SLOW": {
+          "symbol": "TLT",
+          "asset_type": "bond",
+          "broker_profile": "وسيط تقليدي بطيء / سبريد مرتفع",
+          "initial_balance": 10000.0,
+          "final_balance": 10009.0,
+          "profit_loss": 9.0,
+          "roi_percent": 0.09,
+          "total_trades": 1,
+          "winning_trades": 1,
+          "losing_trades": 0,
+          "win_rate_percent": 100.0,
+          "max_drawdown_percent": 0.09
+        }
+      },
+      "IEF": {
+        "ECN_RAW_ULTRA_FAST": {
+          "symbol": "IEF",
+          "asset_type": "bond",
+          "broker_profile": "حساب ECN الخام (أسرع تنفيذ + أقل سبريد)",
+          "initial_balance": 10000.0,
+          "final_balance": 9962.2,
+          "profit_loss": -37.8,
+          "roi_percent": -0.38,
+          "total_trades": 4,
+          "winning_trades": 1,
+          "losing_trades": 3,
+          "win_rate_percent": 25.0,
+          "max_drawdown_percent": 0.38
+        },
+        "STANDARD_PRO": {
+          "symbol": "IEF",
+          "asset_type": "bond",
+          "broker_profile": "حساب قياسي احترافي (Standard Pro)",
+          "initial_balance": 10000.0,
+          "final_balance": 9965.0,
+          "profit_loss": -35.0,
+          "roi_percent": -0.35,
+          "total_trades": 4,
+          "winning_trades": 1,
+          "losing_trades": 3,
+          "win_rate_percent": 25.0,
+          "max_drawdown_percent": 0.35
+        },
+        "HIGH_SPREAD_SLOW": {
+          "symbol": "IEF",
+          "asset_type": "bond",
+          "broker_profile": "وسيط تقليدي بطيء / سبريد مرتفع",
+          "initial_balance": 10000.0,
+          "final_balance": 9961.0,
+          "profit_loss": -39.0,
+          "roi_percent": -0.39,
+          "total_trades": 4,
+          "winning_trades": 1,
+          "losing_trades": 3,
+          "win_rate_percent": 25.0,
+          "max_drawdown_percent": 0.39
+        }
+      },
+      "BND": {
+        "ECN_RAW_ULTRA_FAST": {
+          "symbol": "BND",
+          "asset_type": "bond",
+          "broker_profile": "حساب ECN الخام (أسرع تنفيذ + أقل سبريد)",
+          "initial_balance": 10000.0,
+          "final_balance": 9987.2,
+          "profit_loss": -12.8,
+          "roi_percent": -0.13,
+          "total_trades": 4,
+          "winning_trades": 2,
+          "losing_trades": 2,
+          "win_rate_percent": 50.0,
+          "max_drawdown_percent": 0.19
+        },
+        "STANDARD_PRO": {
+          "symbol": "BND",
+          "asset_type": "bond",
+          "broker_profile": "حساب قياسي احترافي (Standard Pro)",
+          "initial_balance": 10000.0,
+          "final_balance": 9990.0,
+          "profit_loss": -10.0,
+          "roi_percent": -0.1,
+          "total_trades": 4,
+          "winning_trades": 2,
+          "losing_trades": 2,
+          "win_rate_percent": 50.0,
+          "max_drawdown_percent": 0.2
+        },
+        "HIGH_SPREAD_SLOW": {
+          "symbol": "BND",
+          "asset_type": "bond",
+          "broker_profile": "وسيط تقليدي بطيء / سبريد مرتفع",
+          "initial_balance": 10000.0,
+          "final_balance": 9986.0,
+          "profit_loss": -14.0,
+          "roi_percent": -0.14,
+          "total_trades": 4,
+          "winning_trades": 2,
+          "losing_trades": 2,
+          "win_rate_percent": 50.0,
+          "max_drawdown_percent": 0.18
+        }
+      }
+    }
+  }
+}
