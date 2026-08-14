@@ -1,0 +1,725 @@
+{
+  "generated_at": "2026-08-14T14:34:28.392381",
+  "period": "2020-01-01 to 2026-08-14",
+  "results": {
+    "EURUSD": {
+      "pair": "EURUSD",
+      "initial_balance": 10000,
+      "final_balance": 10150.0,
+      "profit_loss": 150.0,
+      "roi_percent": 1.5,
+      "total_trades": 5,
+      "winning_trades": 5,
+      "losing_trades": 0,
+      "win_rate_percent": 100.0,
+      "max_drawdown_percent": 1.48,
+      "settings": {
+        "initial_balance": 10000,
+        "lot_size": 0.1,
+        "tp_pips": 30,
+        "sl_pips": 250,
+        "max_dd_percent": 30.0,
+        "rsi_oversold": 30,
+        "rsi_overbought": 70
+      },
+      "trades_sample": [
+        {
+          "date": "2022-05-18",
+          "type": "BUY",
+          "entry": 1.0532968044281006,
+          "exit": 1.0562968044281005,
+          "pips": 30,
+          "result": "WIN"
+        },
+        {
+          "date": "2022-07-22",
+          "type": "BUY",
+          "entry": 1.0182781219482422,
+          "exit": 1.021278121948242,
+          "pips": 30,
+          "result": "WIN"
+        },
+        {
+          "date": "2023-01-06",
+          "type": "SELL",
+          "entry": 1.0522217750549316,
+          "exit": 1.0492217750549317,
+          "pips": 30,
+          "result": "WIN"
+        },
+        {
+          "date": "2025-03-25",
+          "type": "SELL",
+          "entry": 1.083576202392578,
+          "exit": 1.080576202392578,
+          "pips": 30,
+          "result": "WIN"
+        },
+        {
+          "date": "2025-07-10",
+          "type": "SELL",
+          "entry": 1.1724566221237185,
+          "exit": 1.1694566221237186,
+          "pips": 30,
+          "result": "WIN"
+        }
+      ]
+    },
+    "GBPUSD": {
+      "pair": "GBPUSD",
+      "initial_balance": 10000,
+      "final_balance": 10650.0,
+      "profit_loss": 650.0,
+      "roi_percent": 6.5,
+      "total_trades": 31,
+      "winning_trades": 30,
+      "losing_trades": 1,
+      "win_rate_percent": 96.77,
+      "max_drawdown_percent": 8.17,
+      "settings": {
+        "initial_balance": 10000,
+        "lot_size": 0.1,
+        "tp_pips": 30,
+        "sl_pips": 250,
+        "max_dd_percent": 30.0,
+        "rsi_oversold": 35,
+        "rsi_overbought": 55
+      },
+      "trades_sample": [
+        {
+          "date": "2020-06-19",
+          "type": "SELL",
+          "entry": 1.2552721500396729,
+          "exit": 1.252272150039673,
+          "pips": 30,
+          "result": "WIN"
+        },
+        {
+          "date": "2020-08-28",
+          "type": "SELL",
+          "entry": 1.3048017024993896,
+          "exit": 1.3298017024993896,
+          "pips": -250,
+          "result": "LOSS"
+        },
+        {
+          "date": "2020-09-08",
+          "type": "SELL",
+          "entry": 1.3245735168457031,
+          "exit": 1.3215735168457032,
+          "pips": 30,
+          "result": "WIN"
+        },
+        {
+          "date": "2020-12-10",
+          "type": "SELL",
+          "entry": 1.3357375860214231,
+          "exit": 1.3327375860214232,
+          "pips": 30,
+          "result": "WIN"
+        },
+        {
+          "date": "2021-01-11",
+          "type": "SELL",
+          "entry": 1.3499903678894043,
+          "exit": 1.3469903678894044,
+          "pips": 30,
+          "result": "WIN"
+        },
+        {
+          "date": "2021-02-02",
+          "type": "SELL",
+          "entry": 1.3669419288635254,
+          "exit": 1.3639419288635255,
+          "pips": 30,
+          "result": "WIN"
+        },
+        {
+          "date": "2021-03-05",
+          "type": "SELL",
+          "entry": 1.392951726913452,
+          "exit": 1.389951726913452,
+          "pips": 30,
+          "result": "WIN"
+        },
+        {
+          "date": "2021-06-04",
+          "type": "SELL",
+          "entry": 1.4116119146347046,
+          "exit": 1.4086119146347047,
+          "pips": 30,
+          "result": "WIN"
+        },
+        {
+          "date": "2021-11-03",
+          "type": "SELL",
+          "entry": 1.365541934967041,
+          "exit": 1.3625419349670411,
+          "pips": 30,
+          "result": "WIN"
+        },
+        {
+          "date": "2021-12-16",
+          "type": "BUY",
+          "entry": 1.3257148265838623,
+          "exit": 1.3287148265838622,
+          "pips": 30,
+          "result": "WIN"
+        }
+      ]
+    },
+    "USDCHF": {
+      "pair": "USDCHF",
+      "initial_balance": 10000,
+      "final_balance": 10150.0,
+      "profit_loss": 150.0,
+      "roi_percent": 1.5,
+      "total_trades": 5,
+      "winning_trades": 5,
+      "losing_trades": 0,
+      "win_rate_percent": 100.0,
+      "max_drawdown_percent": 1.48,
+      "settings": {
+        "initial_balance": 10000,
+        "lot_size": 0.1,
+        "tp_pips": 30,
+        "sl_pips": 60,
+        "max_dd_percent": 30.0,
+        "rsi_oversold": 35,
+        "rsi_overbought": 75
+      },
+      "trades_sample": [
+        {
+          "date": "2020-08-12",
+          "type": "BUY",
+          "entry": 0.915499985218048,
+          "exit": 0.918499985218048,
+          "pips": 30,
+          "result": "WIN"
+        },
+        {
+          "date": "2020-12-24",
+          "type": "BUY",
+          "entry": 0.8878600001335144,
+          "exit": 0.8908600001335144,
+          "pips": 30,
+          "result": "WIN"
+        },
+        {
+          "date": "2023-07-31",
+          "type": "BUY",
+          "entry": 0.8688499927520752,
+          "exit": 0.8718499927520752,
+          "pips": 30,
+          "result": "WIN"
+        },
+        {
+          "date": "2024-01-10",
+          "type": "BUY",
+          "entry": 0.8500000238418579,
+          "exit": 0.8530000238418579,
+          "pips": 30,
+          "result": "WIN"
+        },
+        {
+          "date": "2025-07-15",
+          "type": "BUY",
+          "entry": 0.796720027923584,
+          "exit": 0.799720027923584,
+          "pips": 30,
+          "result": "WIN"
+        }
+      ]
+    },
+    "USDJPY": {
+      "pair": "USDJPY",
+      "initial_balance": 10000,
+      "final_balance": 10180.0,
+      "profit_loss": 180.0,
+      "roi_percent": 1.8,
+      "total_trades": 6,
+      "winning_trades": 6,
+      "losing_trades": 0,
+      "win_rate_percent": 100.0,
+      "max_drawdown_percent": 1.77,
+      "settings": {
+        "initial_balance": 10000,
+        "lot_size": 0.1,
+        "tp_pips": 30,
+        "sl_pips": 250,
+        "max_dd_percent": 30.0,
+        "rsi_oversold": 30,
+        "rsi_overbought": 70
+      },
+      "trades_sample": [
+        {
+          "date": "2021-03-24",
+          "type": "SELL",
+          "entry": 108.7760009765625,
+          "exit": 108.4760009765625,
+          "pips": 30,
+          "result": "WIN"
+        },
+        {
+          "date": "2021-10-29",
+          "type": "SELL",
+          "entry": 113.7760009765625,
+          "exit": 113.4760009765625,
+          "pips": 30,
+          "result": "WIN"
+        },
+        {
+          "date": "2022-12-13",
+          "type": "BUY",
+          "entry": 136.71200561523438,
+          "exit": 137.0120056152344,
+          "pips": 30,
+          "result": "WIN"
+        },
+        {
+          "date": "2023-01-06",
+          "type": "BUY",
+          "entry": 132.24600219726562,
+          "exit": 132.54600219726564,
+          "pips": 30,
+          "result": "WIN"
+        },
+        {
+          "date": "2024-07-12",
+          "type": "SELL",
+          "entry": 161.60699462890625,
+          "exit": 161.30699462890624,
+          "pips": 30,
+          "result": "WIN"
+        },
+        {
+          "date": "2025-12-01",
+          "type": "SELL",
+          "entry": 156.28399658203125,
+          "exit": 155.98399658203124,
+          "pips": 30,
+          "result": "WIN"
+        }
+      ]
+    },
+    "AUDUSD": {
+      "pair": "AUDUSD",
+      "initial_balance": 10000,
+      "final_balance": 10110.0,
+      "profit_loss": 110.0,
+      "roi_percent": 1.1,
+      "total_trades": 21,
+      "winning_trades": 17,
+      "losing_trades": 4,
+      "win_rate_percent": 80.95,
+      "max_drawdown_percent": 4.45,
+      "settings": {
+        "initial_balance": 10000,
+        "lot_size": 0.1,
+        "tp_pips": 30,
+        "sl_pips": 100,
+        "max_dd_percent": 30.0,
+        "rsi_oversold": 45,
+        "rsi_overbought": 70
+      },
+      "trades_sample": [
+        {
+          "date": "2020-02-20",
+          "type": "BUY",
+          "entry": 0.6720998883247375,
+          "exit": 0.6620998883247375,
+          "pips": -100,
+          "result": "LOSS"
+        },
+        {
+          "date": "2020-03-06",
+          "type": "BUY",
+          "entry": 0.6626901030540466,
+          "exit": 0.6656901030540466,
+          "pips": 30,
+          "result": "WIN"
+        },
+        {
+          "date": "2020-04-01",
+          "type": "BUY",
+          "entry": 0.618058443069458,
+          "exit": 0.608058443069458,
+          "pips": -100,
+          "result": "LOSS"
+        },
+        {
+          "date": "2020-12-31",
+          "type": "SELL",
+          "entry": 0.7611914277076721,
+          "exit": 0.7711914277076721,
+          "pips": -100,
+          "result": "LOSS"
+        },
+        {
+          "date": "2021-04-14",
+          "type": "BUY",
+          "entry": 0.7666947841644287,
+          "exit": 0.7696947841644287,
+          "pips": 30,
+          "result": "WIN"
+        },
+        {
+          "date": "2021-07-19",
+          "type": "BUY",
+          "entry": 0.7480382323265076,
+          "exit": 0.7380382323265076,
+          "pips": -100,
+          "result": "LOSS"
+        },
+        {
+          "date": "2021-08-04",
+          "type": "BUY",
+          "entry": 0.738825261592865,
+          "exit": 0.741825261592865,
+          "pips": 30,
+          "result": "WIN"
+        },
+        {
+          "date": "2021-08-30",
+          "type": "BUY",
+          "entry": 0.7238398790359497,
+          "exit": 0.7268398790359497,
+          "pips": 30,
+          "result": "WIN"
+        },
+        {
+          "date": "2021-10-07",
+          "type": "BUY",
+          "entry": 0.7290754914283752,
+          "exit": 0.7320754914283752,
+          "pips": 30,
+          "result": "WIN"
+        },
+        {
+          "date": "2021-12-13",
+          "type": "BUY",
+          "entry": 0.7146124243736267,
+          "exit": 0.7176124243736267,
+          "pips": 30,
+          "result": "WIN"
+        }
+      ]
+    },
+    "USDCAD": {
+      "pair": "USDCAD",
+      "initial_balance": 10000,
+      "final_balance": 10180.0,
+      "profit_loss": 180.0,
+      "roi_percent": 1.8,
+      "total_trades": 6,
+      "winning_trades": 6,
+      "losing_trades": 0,
+      "win_rate_percent": 100.0,
+      "max_drawdown_percent": 1.77,
+      "settings": {
+        "initial_balance": 10000,
+        "lot_size": 0.1,
+        "tp_pips": 30,
+        "sl_pips": 200,
+        "max_dd_percent": 30.0,
+        "rsi_oversold": 35,
+        "rsi_overbought": 70
+      },
+      "trades_sample": [
+        {
+          "date": "2020-06-25",
+          "type": "BUY",
+          "entry": 1.3637100458145142,
+          "exit": 1.366710045814514,
+          "pips": 30,
+          "result": "WIN"
+        },
+        {
+          "date": "2020-12-22",
+          "type": "BUY",
+          "entry": 1.281059980392456,
+          "exit": 1.284059980392456,
+          "pips": 30,
+          "result": "WIN"
+        },
+        {
+          "date": "2021-05-26",
+          "type": "BUY",
+          "entry": 1.2066999673843384,
+          "exit": 1.2096999673843383,
+          "pips": 30,
+          "result": "WIN"
+        },
+        {
+          "date": "2021-11-02",
+          "type": "BUY",
+          "entry": 1.2382899522781372,
+          "exit": 1.241289952278137,
+          "pips": 30,
+          "result": "WIN"
+        },
+        {
+          "date": "2024-01-04",
+          "type": "BUY",
+          "entry": 1.332200050354004,
+          "exit": 1.3352000503540038,
+          "pips": 30,
+          "result": "WIN"
+        },
+        {
+          "date": "2026-07-08",
+          "type": "SELL",
+          "entry": 1.419029951095581,
+          "exit": 1.4160299510955812,
+          "pips": 30,
+          "result": "WIN"
+        }
+      ]
+    },
+    "EURCHF": {
+      "pair": "EURCHF",
+      "initial_balance": 10000,
+      "final_balance": 10360.0,
+      "profit_loss": 360.0,
+      "roi_percent": 3.6,
+      "total_trades": 12,
+      "winning_trades": 12,
+      "losing_trades": 0,
+      "win_rate_percent": 100.0,
+      "max_drawdown_percent": 3.47,
+      "settings": {
+        "initial_balance": 10000,
+        "lot_size": 0.1,
+        "tp_pips": 30,
+        "sl_pips": 250,
+        "max_dd_percent": 30.0,
+        "rsi_oversold": 40,
+        "rsi_overbought": 70
+      },
+      "trades_sample": [
+        {
+          "date": "2020-06-02",
+          "type": "BUY",
+          "entry": 1.0706000328063965,
+          "exit": 1.0736000328063964,
+          "pips": 30,
+          "result": "WIN"
+        },
+        {
+          "date": "2021-08-13",
+          "type": "BUY",
+          "entry": 1.080780029296875,
+          "exit": 1.083780029296875,
+          "pips": 30,
+          "result": "WIN"
+        },
+        {
+          "date": "2022-02-04",
+          "type": "BUY",
+          "entry": 1.0524100065231323,
+          "exit": 1.0554100065231322,
+          "pips": 30,
+          "result": "WIN"
+        },
+        {
+          "date": "2022-03-16",
+          "type": "BUY",
+          "entry": 1.026919960975647,
+          "exit": 1.0299199609756469,
+          "pips": 30,
+          "result": "WIN"
+        },
+        {
+          "date": "2022-07-21",
+          "type": "BUY",
+          "entry": 0.991699993610382,
+          "exit": 0.994699993610382,
+          "pips": 30,
+          "result": "WIN"
+        },
+        {
+          "date": "2022-08-04",
+          "type": "BUY",
+          "entry": 0.9732999801635742,
+          "exit": 0.9762999801635742,
+          "pips": 30,
+          "result": "WIN"
+        },
+        {
+          "date": "2022-08-25",
+          "type": "BUY",
+          "entry": 0.9611899852752686,
+          "exit": 0.9641899852752686,
+          "pips": 30,
+          "result": "WIN"
+        },
+        {
+          "date": "2023-06-01",
+          "type": "BUY",
+          "entry": 0.9721999764442444,
+          "exit": 0.9751999764442444,
+          "pips": 30,
+          "result": "WIN"
+        },
+        {
+          "date": "2023-08-31",
+          "type": "BUY",
+          "entry": 0.95591002702713,
+          "exit": 0.95891002702713,
+          "pips": 30,
+          "result": "WIN"
+        },
+        {
+          "date": "2024-01-16",
+          "type": "BUY",
+          "entry": 0.9333800077438354,
+          "exit": 0.9363800077438355,
+          "pips": 30,
+          "result": "WIN"
+        }
+      ]
+    },
+    "EURGBP": {
+      "pair": "EURGBP",
+      "initial_balance": 10000,
+      "final_balance": 10180.0,
+      "profit_loss": 180.0,
+      "roi_percent": 1.8,
+      "total_trades": 6,
+      "winning_trades": 6,
+      "losing_trades": 0,
+      "win_rate_percent": 100.0,
+      "max_drawdown_percent": 1.77,
+      "settings": {
+        "initial_balance": 10000,
+        "lot_size": 0.1,
+        "tp_pips": 30,
+        "sl_pips": 200,
+        "max_dd_percent": 30.0,
+        "rsi_oversold": 35,
+        "rsi_overbought": 65
+      },
+      "trades_sample": [
+        {
+          "date": "2020-07-31",
+          "type": "SELL",
+          "entry": 0.9075700044631958,
+          "exit": 0.9045700044631958,
+          "pips": 30,
+          "result": "WIN"
+        },
+        {
+          "date": "2021-04-09",
+          "type": "BUY",
+          "entry": 0.8647699952125549,
+          "exit": 0.8677699952125549,
+          "pips": 30,
+          "result": "WIN"
+        },
+        {
+          "date": "2022-08-29",
+          "type": "BUY",
+          "entry": 0.8508800268173218,
+          "exit": 0.8538800268173218,
+          "pips": 30,
+          "result": "WIN"
+        },
+        {
+          "date": "2023-12-19",
+          "type": "BUY",
+          "entry": 0.8597400188446045,
+          "exit": 0.8627400188446045,
+          "pips": 30,
+          "result": "WIN"
+        },
+        {
+          "date": "2024-07-29",
+          "type": "BUY",
+          "entry": 0.8420400023460388,
+          "exit": 0.8450400023460388,
+          "pips": 30,
+          "result": "WIN"
+        },
+        {
+          "date": "2025-10-07",
+          "type": "SELL",
+          "entry": 0.8717799782752991,
+          "exit": 0.8687799782752991,
+          "pips": 30,
+          "result": "WIN"
+        }
+      ]
+    },
+    "EURJPY": {
+      "pair": "EURJPY",
+      "initial_balance": 10000,
+      "final_balance": 10180.0,
+      "profit_loss": 180.0,
+      "roi_percent": 1.8,
+      "total_trades": 6,
+      "winning_trades": 6,
+      "losing_trades": 0,
+      "win_rate_percent": 100.0,
+      "max_drawdown_percent": 1.77,
+      "settings": {
+        "initial_balance": 10000,
+        "lot_size": 0.1,
+        "tp_pips": 30,
+        "sl_pips": 150,
+        "max_dd_percent": 30.0,
+        "rsi_oversold": 25,
+        "rsi_overbought": 70
+      },
+      "trades_sample": [
+        {
+          "date": "2021-04-19",
+          "type": "SELL",
+          "entry": 130.197998046875,
+          "exit": 129.897998046875,
+          "pips": 30,
+          "result": "WIN"
+        },
+        {
+          "date": "2021-06-11",
+          "type": "SELL",
+          "entry": 133.1020050048828,
+          "exit": 132.8020050048828,
+          "pips": 30,
+          "result": "WIN"
+        },
+        {
+          "date": "2023-07-07",
+          "type": "SELL",
+          "entry": 156.84300231933594,
+          "exit": 156.54300231933593,
+          "pips": 30,
+          "result": "WIN"
+        },
+        {
+          "date": "2024-11-11",
+          "type": "SELL",
+          "entry": 165.3520050048828,
+          "exit": 165.0520050048828,
+          "pips": 30,
+          "result": "WIN"
+        },
+        {
+          "date": "2025-07-22",
+          "type": "SELL",
+          "entry": 172.6280059814453,
+          "exit": 172.3280059814453,
+          "pips": 30,
+          "result": "WIN"
+        },
+        {
+          "date": "2026-04-28",
+          "type": "SELL",
+          "entry": 186.80799865722656,
+          "exit": 186.50799865722655,
+          "pips": 30,
+          "result": "WIN"
+        }
+      ]
+    }
+  }
+}

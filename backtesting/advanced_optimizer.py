@@ -1,1 +1,333 @@
-#!/usr/bin/env python3\n# -*- coding: utf-8 -*-\n\"\"\"\nمحسّن متقدم - إيجاد أفضل الإعدادات\nبحث شامل عن أفضل مجموعة إعدادات\n\"\"\"\n\nimport numpy as np\nimport pandas as pd\nfrom itertools import product\nimport json\nfrom datetime import datetime\nfrom standalone_backtester import StandaloneBacktester\n\nclass AdvancedOptimizer:\n    \"\"\"\n    محسّن متقدم للعثور على أفضل الإعدادات\n    \"\"\"\n    def __init__(self):\n        self.backtester = StandaloneBacktester()\n        self.optimization_results = []\n    \n    def optimize_pair(self, pair, year=2024, num_combinations=100):\n        \"\"\"\n        تحسين الإعدادات لزوج معين\n        \"\"\"\n        print(f\"\\n{'='*80}\")\n        print(f\"⚙️ تحسين الإعدادات لـ {pair}\")\n        print(f\"{'='*80}\\n\")\n        \n        # نطاقات الإعدادات المراد اختبارها\n        tp_range = [20, 30, 40, 50, 60, 75, 100]              # Take Profit\n        sl_range = [40, 60, 80, 100, 120, 150]               # Stop Loss\n        rsi_oversold_range = [15, 20, 25, 30, 35]            # RSI Oversold\n        rsi_overbought_range = [65, 70, 75, 80, 85]          # RSI Overbought\n        \n        results = []\n        test_count = 0\n        \n        # اختبار المجموعات\n        for tp, sl, rsi_os, rsi_ob in product(tp_range, sl_range, rsi_oversold_range, rsi_overbought_range):\n            if test_count >= num_combinations:\n                break\n            \n            # تخطي المجموعات غير المنطقية\n            if tp >= sl or rsi_os >= rsi_ob:\n                continue\n            \n            settings = {\n                'initial_balance': 1000,\n                'lot_size': 0.1,\n                'tp_pips': tp,\n                'sl_pips': sl,\n                'max_dd_percent': 30,\n                'rsi_overbought': rsi_ob,\n                'rsi_oversold': rsi_os\n            }\n            \n            result = self.backtester.backtest(pair, year, settings)\n            \n            if result:\n                # حساب درجة الأداء\n                score = self.calculate_score(result)\n                result['score'] = score\n                results.append(result)\n                test_count += 1\n                \n                # عرض التقدم\n                if test_count % 10 == 0:\n                    print(f\"   [✓] اختبار {test_count}/{num_combinations}\")\n        \n        # ترتيب النتائج\n        results.sort(key=lambda x: x['score'], reverse=True)\n        self.optimization_results = results\n        \n        return results[:5]  # إرجاع أفضل 5\n    \n    def calculate_score(self, result):\n        \"\"\"\n        حساب درجة الأداء الكلية\n        الصيغة: (ROI × 0.4) + (Win Rate × 0.4) + (Safety × 0.2)\n        \"\"\"\n        roi_score = min(max(result['roi_percent'], 0), 100)  # 0-100\n        win_rate = result['win_rate_percent']  # 0-100\n        \n        # درجة الأمان (كلما قل التراجع = أفضل)\n        safety_score = max(0, 100 - result['max_drawdown_percent'] * 2)\n        \n        # الحساب النهائي\n        total_score = (roi_score * 0.4) + (win_rate * 0.4) + (safety_score * 0.2)\n        \n        return total_score\n    \n    def print_top_results(self, top_n=5):\n        \"\"\"\n        طباعة أفضل النتائج\n        \"\"\"\n        if not self.optimization_results:\n            print(\"❌ لا توجد نتائج\")\n            return\n        \n        print(f\"\\n{'='*100}\")\n        print(f\"🏆 أفضل {top_n} إعدادات\")\n        print(f\"{'='*100}\\n\")\n        \n        for rank, result in enumerate(self.optimization_results[:top_n], 1):\n            print(f\"\\n🥇 الترتيب #{rank} | درجة: {result['score']:.2f}/100\")\n            print(f\"{'─'*100}\")\n            \n            print(f\"  ⚙️ الإعدادات:\")\n            print(f\"     • TP: {result['settings']['tp_pips']:3d} pips  |  SL: {result['settings']['sl_pips']:3d} pips\")\n            print(f\"     • RSI: {result['settings']['rsi_oversold']:2d}-{result['settings']['rsi_overbought']:2d}\")\n            \n            print(f\"\\n  💰 النتائج المالية:\")\n            print(f\"     • الربح: ${result['profit_loss']:.2f}  |  العائد: {result['roi_percent']:+.2f}%\")\n            \n            print(f\"\\n  📊 إحصائيات التداول:\")\n            print(f\"     • إجمالي العمليات: {result['total_trades']:3d}\")\n            print(f\"     • معدل الفوز: {result['win_rate_percent']:.2f}% ({result['winning_trades']}/{result['total_trades']})\")\n            \n            print(f\"\\n  ⚠️ المخاطر:\")\n            print(f\"     • أقصى تراجع: {result['max_drawdown_percent']:.2f}%\")\n            \n            # تقييم\n            print(f\"\\n  📈 التقييم:\")\n            if result['roi_percent'] > 50:\n                print(f\"     ✅ العائد: ممتاز جداً\")\n            elif result['roi_percent'] > 20:\n                print(f\"     ✅ العائد: جيد جداً\")\n            elif result['roi_percent'] > 0:\n                print(f\"     ⚠️ العائد: مقبول\")\n            \n            if result['win_rate_percent'] > 65:\n                print(f\"     ✅ معدل الفوز: ممتاز\")\n            elif result['win_rate_percent'] > 55:\n                print(f\"     ✅ معدل الفوز: جيد\")\n            \n            if result['max_drawdown_percent'] < 15:\n                print(f\"     ✅ إدارة المخاطر: آمنة جداً\")\n            elif result['max_drawdown_percent'] < 25:\n                print(f\"     ⚠️ إدارة المخاطر: مقبولة\")\n            else:\n                print(f\"     🚨 إدارة المخاطر: عالية الخطورة\")\n    \n    def create_final_recommendation(self):\n        \"\"\"\n        إنشاء توصية نهائية\n        \"\"\"\n        if not self.optimization_results:\n            return None\n        \n        best = self.optimization_results[0]\n        \n        recommendation = {\n            'timestamp': datetime.now().isoformat(),\n            'best_settings': best['settings'],\n            'expected_performance': {\n                'roi_percent': best['roi_percent'],\n                'win_rate_percent': best['win_rate_percent'],\n                'max_drawdown_percent': best['max_drawdown_percent'],\n                'score': best['score']\n            },\n            'quality_level': self._determine_quality(best),\n            'recommendations': self._get_recommendations(best),\n            'warnings': self._get_warnings(best)\n        }\n        \n        return recommendation\n    \n    def _determine_quality(self, result):\n        \"\"\"\n        تحديد مستوى الجودة\n        \"\"\"\n        score = result['score']\n        \n        if score >= 75:\n            return \"🟢 ممتاز جداً\"\n        elif score >= 60:\n            return \"🟡 جيد\"\n        elif score >= 45:\n            return \"🟠 مقبول\"\n        else:\n            return \"🔴 ضعيف\"\n    \n    def _get_recommendations(self, result):\n        \"\"\"\n        الحصول على توصيات\n        \"\"\"\n        recommendations = []\n        \n        if result['roi_percent'] > 30:\n            recommendations.append(\"✅ العائد عالي جداً - يمكن الاستثمار برصيد كبير\")\n        elif result['roi_percent'] > 10:\n            recommendations.append(\"✅ العائد جيد - مناسب للاستثمار المتوسط\")\n        \n        if result['win_rate_percent'] > 65:\n            recommendations.append(\"✅ معدل الفوز عالي - الاستراتيجية موثوقة\")\n        \n        if result['max_drawdown_percent'] < 20:\n            recommendations.append(\"✅ المخاطر منخفضة - آمن للتداول\")\n        \n        if result['total_trades'] > 100:\n            recommendations.append(\"✅ عدد العمليات كافي للإحصائيات\")\n        \n        return recommendations\n    \n    def _get_warnings(self, result):\n        \"\"\"\n        الحصول على تحذيرات\n        \"\"\"\n        warnings = []\n        \n        if result['roi_percent'] < 0:\n            warnings.append(\"🚨 الاستراتيجية خاسرة - لا تستخدمها بأموال حقيقية\")\n        \n        if result['win_rate_percent'] < 50:\n            warnings.append(\"⚠️ معدل الفوز أقل من 50% - عالية الخطورة\")\n        \n        if result['max_drawdown_percent'] > 30:\n            warnings.append(\"⚠️ التراجع الأقصى عالي - مخاطر عالية\")\n        \n        if result['total_trades'] < 30:\n            warnings.append(\"⚠️ عدد العمليات قليل - البيانات غير كافية\")\n        \n        return warnings\n    \n    def export_optimization(self, filename='optimization_report.json'):\n        \"\"\"\n        تصدير تقرير التحسين\n        \"\"\"\n        export_data = {\n            'timestamp': datetime.now().isoformat(),\n            'total_tests': len(self.optimization_results),\n            'top_5_results': []\n        }\n        \n        for result in self.optimization_results[:5]:\n            export_result = result.copy()\n            export_result.pop('trades_sample', None)\n            export_data['top_5_results'].append(export_result)\n        \n        with open(filename, 'w', encoding='utf-8') as f:\n            json.dump(export_data, f, ensure_ascii=False, indent=2)\n        \n        print(f\"\\n✅ تم حفظ التقرير في: {filename}\")\n    \n    def compare_settings(self, settings_list):\n        \"\"\"\n        مقارنة عدة مجموعات إعدادات\n        \"\"\"\n        print(f\"\\n{'='*100}\")\n        print(\"🔄 مقارنة الإعدادات\")\n        print(f\"{'='*100}\\n\")\n        \n        comparison_results = []\n        \n        for settings in settings_list:\n            result = self.backtester.backtest('EURUSD', settings=settings)\n            comparison_results.append({\n                'TP': settings['tp_pips'],\n                'SL': settings['sl_pips'],\n                'ROI%': f\"{result['roi_percent']:.2f}%\",\n                'Win%': f\"{result['win_rate_percent']:.2f}%\",\n                'Trades': result['total_trades'],\n                'MaxDD%': f\"{result['max_drawdown_percent']:.2f}%\"\n            })\n        \n        df = pd.DataFrame(comparison_results)\n        print(df.to_string(index=False))\n        print()\n\n\nif __name__ == \"__main__\":\n    print(\"\\n\" + \"=\"*100)\n    print(\"🎯 محسّن متقدم - البحث عن أفضل الإعدادات\")\n    print(\"=\"*100)\n    \n    optimizer = AdvancedOptimizer()\n    \n    # تحسين EURUSD\n    top_results = optimizer.optimize_pair('EURUSD', year=2024, num_combinations=50)\n    \n    # عرض أفضل النتائج\n    optimizer.print_top_results(top_n=5)\n    \n    # التوصية النهائية\n    recommendation = optimizer.create_final_recommendation()\n    \n    if recommendation:\n        print(f\"\\n{'='*100}\")\n        print(\"💡 التوصية النهائية\")\n        print(f\"{'='*100}\\n\")\n        print(f\"مستوى الجودة: {recommendation['quality_level']}\")\n        print(f\"\\nالإعدادات الموصى بها:\")\n        for key, value in recommendation['best_settings'].items():\n            print(f\"   • {key}: {value}\")\n        \n        if recommendation['recommendations']:\n            print(f\"\\n✅ الإيجابيات:\")\n            for rec in recommendation['recommendations']:\n                print(f\"   {rec}\")\n        \n        if recommendation['warnings']:\n            print(f\"\\n⚠️ التحذيرات:\")\n            for warning in recommendation['warnings']:\n                print(f\"   {warning}\")\n    \n    # حفظ التقرير\n    optimizer.export_optimization('optimization_report.json')\n    \n    print(f\"\\n{'='*100}\")\n    print(\"✅ اكتمل التحسين بنجاح!\")\n    print(f\"{'='*100}\\n\")\n
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+محسّن متقدم - إيجاد أفضل الإعدادات
+بحث شامل عن أفضل مجموعة إعدادات
+"""
+
+import numpy as np
+import pandas as pd
+from itertools import product
+import json
+from datetime import datetime
+from standalone_backtester import StandaloneBacktester
+
+class AdvancedOptimizer:
+    """
+    محسّن متقدم للعثور على أفضل الإعدادات
+    """
+    def __init__(self):
+        self.backtester = StandaloneBacktester()
+        self.optimization_results = []
+
+    def optimize_pair(self, pair, year=2024, num_combinations=100):
+        """
+        تحسين الإعدادات لزوج معين
+        """
+        print(f"\
+{'='*80}")
+        print(f"⚙️ تحسين الإعدادات لـ {pair}")
+        print(f"{'='*80}\
+")
+
+        # نطاقات الإعدادات المراد اختبارها
+        tp_range = [20, 30, 40, 50, 60, 75, 100]              # Take Profit
+        sl_range = [40, 60, 80, 100, 120, 150]               # Stop Loss
+        rsi_oversold_range = [15, 20, 25, 30, 35]            # RSI Oversold
+        rsi_overbought_range = [65, 70, 75, 80, 85]          # RSI Overbought
+
+        results = []
+        test_count = 0
+
+        # اختبار المجموعات
+        for tp, sl, rsi_os, rsi_ob in product(tp_range, sl_range, rsi_oversold_range, rsi_overbought_range):
+            if test_count >= num_combinations:
+                break
+
+            # تخطي المجموعات غير المنطقية
+            if tp >= sl or rsi_os >= rsi_ob:
+                continue
+
+            settings = {
+                'initial_balance': 1000,
+                'lot_size': 0.1,
+                'tp_pips': tp,
+                'sl_pips': sl,
+                'max_dd_percent': 30,
+                'rsi_overbought': rsi_ob,
+                'rsi_oversold': rsi_os
+            }
+
+            result = self.backtester.backtest(pair, year, settings)
+
+            if result:
+                # حساب درجة الأداء
+                score = self.calculate_score(result)
+                result['score'] = score
+                results.append(result)
+                test_count += 1
+
+                # عرض التقدم
+                if test_count % 10 == 0:
+                    print(f"   [✓] اختبار {test_count}/{num_combinations}")
+
+        # ترتيب النتائج
+        results.sort(key=lambda x: x['score'], reverse=True)
+        self.optimization_results = results
+
+        return results[:5]  # إرجاع أفضل 5
+
+    def calculate_score(self, result):
+        """
+        حساب درجة الأداء الكلية
+        الصيغة: (ROI × 0.4) + (Win Rate × 0.4) + (Safety × 0.2)
+        """
+        roi_score = min(max(result['roi_percent'], 0), 100)  # 0-100
+        win_rate = result['win_rate_percent']  # 0-100
+
+        # درجة الأمان (كلما قل التراجع = أفضل)
+        safety_score = max(0, 100 - result['max_drawdown_percent'] * 2)
+
+        # الحساب النهائي
+        total_score = (roi_score * 0.4) + (win_rate * 0.4) + (safety_score * 0.2)
+
+        return total_score
+
+    def print_top_results(self, top_n=5):
+        """
+        طباعة أفضل النتائج
+        """
+        if not self.optimization_results:
+            print("❌ لا توجد نتائج")
+            return
+
+        print(f"\
+{'='*100}")
+        print(f"🏆 أفضل {top_n} إعدادات")
+        print(f"{'='*100}\
+")
+
+        for rank, result in enumerate(self.optimization_results[:top_n], 1):
+            print(f"\
+🥇 الترتيب #{rank} | درجة: {result['score']:.2f}/100")
+            print(f"{'─'*100}")
+
+            print(f"  ⚙️ الإعدادات:")
+            print(f"     • TP: {result['settings']['tp_pips']:3d} pips  |  SL: {result['settings']['sl_pips']:3d} pips")
+            print(f"     • RSI: {result['settings']['rsi_oversold']:2d}-{result['settings']['rsi_overbought']:2d}")
+
+            print(f"\
+  💰 النتائج المالية:")
+            print(f"     • الربح: ${result['profit_loss']:.2f}  |  العائد: {result['roi_percent']:+.2f}%")
+
+            print(f"\
+  📊 إحصائيات التداول:")
+            print(f"     • إجمالي العمليات: {result['total_trades']:3d}")
+            print(f"     • معدل الفوز: {result['win_rate_percent']:.2f}% ({result['winning_trades']}/{result['total_trades']})")
+
+            print(f"\
+  ⚠️ المخاطر:")
+            print(f"     • أقصى تراجع: {result['max_drawdown_percent']:.2f}%")
+
+            # تقييم
+            print(f"\
+  📈 التقييم:")
+            if result['roi_percent'] > 50:
+                print(f"     ✅ العائد: ممتاز جداً")
+            elif result['roi_percent'] > 20:
+                print(f"     ✅ العائد: جيد جداً")
+            elif result['roi_percent'] > 0:
+                print(f"     ⚠️ العائد: مقبول")
+
+            if result['win_rate_percent'] > 65:
+                print(f"     ✅ معدل الفوز: ممتاز")
+            elif result['win_rate_percent'] > 55:
+                print(f"     ✅ معدل الفوز: جيد")
+
+            if result['max_drawdown_percent'] < 15:
+                print(f"     ✅ إدارة المخاطر: آمنة جداً")
+            elif result['max_drawdown_percent'] < 25:
+                print(f"     ⚠️ إدارة المخاطر: مقبولة")
+            else:
+                print(f"     🚨 إدارة المخاطر: عالية الخطورة")
+
+    def create_final_recommendation(self):
+        """
+        إنشاء توصية نهائية
+        """
+        if not self.optimization_results:
+            return None
+
+        best = self.optimization_results[0]
+
+        recommendation = {
+            'timestamp': datetime.now().isoformat(),
+            'best_settings': best['settings'],
+            'expected_performance': {
+                'roi_percent': best['roi_percent'],
+                'win_rate_percent': best['win_rate_percent'],
+                'max_drawdown_percent': best['max_drawdown_percent'],
+                'score': best['score']
+            },
+            'quality_level': self._determine_quality(best),
+            'recommendations': self._get_recommendations(best),
+            'warnings': self._get_warnings(best)
+        }
+
+        return recommendation
+
+    def _determine_quality(self, result):
+        """
+        تحديد مستوى الجودة
+        """
+        score = result['score']
+
+        if score >= 75:
+            return "🟢 ممتاز جداً"
+        elif score >= 60:
+            return "🟡 جيد"
+        elif score >= 45:
+            return "🟠 مقبول"
+        else:
+            return "🔴 ضعيف"
+
+    def _get_recommendations(self, result):
+        """
+        الحصول على توصيات
+        """
+        recommendations = []
+
+        if result['roi_percent'] > 30:
+            recommendations.append("✅ العائد عالي جداً - يمكن الاستثمار برصيد كبير")
+        elif result['roi_percent'] > 10:
+            recommendations.append("✅ العائد جيد - مناسب للاستثمار المتوسط")
+
+        if result['win_rate_percent'] > 65:
+            recommendations.append("✅ معدل الفوز عالي - الاستراتيجية موثوقة")
+
+        if result['max_drawdown_percent'] < 20:
+            recommendations.append("✅ المخاطر منخفضة - آمن للتداول")
+
+        if result['total_trades'] > 100:
+            recommendations.append("✅ عدد العمليات كافي للإحصائيات")
+
+        return recommendations
+
+    def _get_warnings(self, result):
+        """
+        الحصول على تحذيرات
+        """
+        warnings = []
+
+        if result['roi_percent'] < 0:
+            warnings.append("🚨 الاستراتيجية خاسرة - لا تستخدمها بأموال حقيقية")
+
+        if result['win_rate_percent'] < 50:
+            warnings.append("⚠️ معدل الفوز أقل من 50% - عالية الخطورة")
+
+        if result['max_drawdown_percent'] > 30:
+            warnings.append("⚠️ التراجع الأقصى عالي - مخاطر عالية")
+
+        if result['total_trades'] < 30:
+            warnings.append("⚠️ عدد العمليات قليل - البيانات غير كافية")
+
+        return warnings
+
+    def export_optimization(self, filename='optimization_report.json'):
+        """
+        تصدير تقرير التحسين
+        """
+        export_data = {
+            'timestamp': datetime.now().isoformat(),
+            'total_tests': len(self.optimization_results),
+            'top_5_results': []
+        }
+
+        for result in self.optimization_results[:5]:
+            export_result = result.copy()
+            export_result.pop('trades_sample', None)
+            export_data['top_5_results'].append(export_result)
+
+        with open(filename, 'w', encoding='utf-8') as f:
+            json.dump(export_data, f, ensure_ascii=False, indent=2)
+
+        print(f"\
+✅ تم حفظ التقرير في: {filename}")
+
+    def compare_settings(self, settings_list):
+        """
+        مقارنة عدة مجموعات إعدادات
+        """
+        print(f"\
+{'='*100}")
+        print("🔄 مقارنة الإعدادات")
+        print(f"{'='*100}\
+")
+
+        comparison_results = []
+
+        for settings in settings_list:
+            result = self.backtester.backtest('EURUSD', settings=settings)
+            comparison_results.append({
+                'TP': settings['tp_pips'],
+                'SL': settings['sl_pips'],
+                'ROI%': f"{result['roi_percent']:.2f}%",
+                'Win%': f"{result['win_rate_percent']:.2f}%",
+                'Trades': result['total_trades'],
+                'MaxDD%': f"{result['max_drawdown_percent']:.2f}%"
+            })
+
+        df = pd.DataFrame(comparison_results)
+        print(df.to_string(index=False))
+        print()
+
+
+if __name__ == "__main__":
+    print("\
+" + "="*100)
+    print("🎯 محسّن متقدم - البحث عن أفضل الإعدادات")
+    print("="*100)
+
+    optimizer = AdvancedOptimizer()
+
+    # تحسين EURUSD
+    top_results = optimizer.optimize_pair('EURUSD', year=2024, num_combinations=50)
+
+    # عرض أفضل النتائج
+    optimizer.print_top_results(top_n=5)
+
+    # التوصية النهائية
+    recommendation = optimizer.create_final_recommendation()
+
+    if recommendation:
+        print(f"\
+{'='*100}")
+        print("💡 التوصية النهائية")
+        print(f"{'='*100}\
+")
+        print(f"مستوى الجودة: {recommendation['quality_level']}")
+        print(f"\
+الإعدادات الموصى بها:")
+        for key, value in recommendation['best_settings'].items():
+            print(f"   • {key}: {value}")
+
+        if recommendation['recommendations']:
+            print(f"\
+✅ الإيجابيات:")
+            for rec in recommendation['recommendations']:
+                print(f"   {rec}")
+
+        if recommendation['warnings']:
+            print(f"\
+⚠️ التحذيرات:")
+            for warning in recommendation['warnings']:
+                print(f"   {warning}")
+
+    # حفظ التقرير
+    optimizer.export_optimization('optimization_report.json')
+
+    print(f"\
+{'='*100}")
+    print("✅ اكتمل التحسين بنجاح!")
+    print(f"{'='*100}\
+")
