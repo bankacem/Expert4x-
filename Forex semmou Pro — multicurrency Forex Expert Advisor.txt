@@ -1,0 +1,43 @@
+ForexWinners.Ru
+
+New Forex Hacked Pro is multicurrency and now it can be used simultaneously on nine currency pairs (see characteristics below).
+
+Forex Hacked Pro works using the martingale method, but entries into the market are made by three scalping strategies, which increases the likelihood accurate inputs and reduces the potential danger from the ordinary course of trade by the method of Martin Gale.
+
+?haracteristics of the Forex Hacked Pro
+•Platform: Metatrader4
+•Currency pairs: EURUSD, GBPUSD, EURCHF, USDCHF, EURJPY, USDJPY, EURGBP, AUDUSD, USDCAD
+•Trading Time: Around the clock
+•Timeframe: H1
+•Recommended broker: Alpari (Account Type: nano.mt4)
+
+Backtest of Forex Hacked Pro
+
+EURUSD2009-2014Default settingsForex Hacked Pro EURUSD
+
+GBPUSD2009-2014Default settingsForex Hacked Pro GBPUSD
+
+USDCHF2009-2014Default settingsForex Hacked Pro USDCHF
+ 
+ 
+AUDUSD2009-2014Default settingsForex Hacked Pro AUDUSD
+
+USDCAD2009-2014Default settingsForex Hacked Pro USDCAD
+
+Naturally, testing history for Forex Hacked Pro performed for each pair separately. But in the real trading, the developers recommend installing EA with recommended settings sets (files. set) for all nine pairs to thereby to diversify risks. Of course, this makes some sense as large drawdowns moments do not occur simultaneously on several pairs, which can be clearly seen in the graphs backtest.
+
+Forex Hacked Pro works using the martingale method and so is very dangerous and can lead to complete loss of the deposit. But with timely withdrawal profits earned, can be quite profitable. A timely withdrawal of profits of the initial deposit automatically makes Forex Hacked Pro break-even.
+
+For smooth operation Forex Hacked Pro should use VPS server ? Forex VPS
+
+In the archives Forex_Hacked_Pro.rar:
+•Forex Hacked Pro.ex4
+•audusd.set
+•eurchf.set
+•eurgbp.set
+•eurjpy.set
+•eurusd.set
+•gbpusd.set
+•usdcad.set
+•usdchf.set
+•usdjpy.set
