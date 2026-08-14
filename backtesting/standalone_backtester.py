@@ -1,1 +1,418 @@
-#!/usr/bin/env python3\n# -*- coding: utf-8 -*-\n\"\"\"\nمختبر مستقل - لا يحتاج لتحميل البيانات من الإنترنت\nيستخدم بيانات محاكاة واقعية جداً\n\"\"\"\n\nimport numpy as np\nimport pandas as pd\nfrom datetime import datetime, timedelta\nimport json\nimport os\n\nclass RealisticDataGenerator:\n    \"\"\"\n    توليد بيانات فوركس واقعية جداً تحاكي السلوك الفعلي\n    \"\"\"\n    def __init__(self, seed=42):\n        np.random.seed(seed)\n    \n    def generate_ohlc(self, pair, year=2024, num_days=365):\n        \"\"\"\n        توليد بيانات OHLC واقعية\n        \"\"\"\n        # الأسعار الافتتاحية التقريبية لكل زوج\n        opening_prices = {\n            'EURUSD': 1.0800,\n            'GBPUSD': 1.2700,\n            'USDCHF': 0.9200,\n            'USDJPY': 110.50,\n            'AUDUSD': 0.6700,\n            'USDCAD': 1.3600,\n            'EURCHF': 0.9900,\n            'EURGBP': 0.8500,\n            'EURJPY': 119.50\n        }\n        \n        # التقلب اليومي لكل زوج (volatility)\n        volatility = {\n            'EURUSD': 0.008,\n            'GBPUSD': 0.010,\n            'USDCHF': 0.009,\n            'USDJPY': 0.012,\n            'AUDUSD': 0.011,\n            'USDCAD': 0.009,\n            'EURCHF': 0.008,\n            'EURGBP': 0.009,\n            'EURJPY': 0.011\n        }\n        \n        start_price = opening_prices.get(pair, 1.0)\n        daily_vol = volatility.get(pair, 0.01)\n        \n        # توليد البيانات\n        dates = []\n        closes = []\n        current_price = start_price\n        \n        for day in range(num_days * 24):  # ساعة واحدة في كل حلقة\n            # حركة عشوائية واقعية (Random Walk with Drift)\n            drift = 0.0001\n            shock = np.random.normal(0, daily_vol / 24)\n            current_price *= (1 + drift/24 + shock)\n            \n            closes.append(current_price)\n        \n        # إنشاء DataFrame\n        start_date = datetime(year, 1, 1)\n        dates = [start_date + timedelta(hours=i) for i in range(len(closes))]\n        \n        df = pd.DataFrame({\n            'Date': dates,\n            'Close': closes\n        })\n        \n        # توليد OHLC من Close\n        df['High'] = df['Close'] * (1 + abs(np.random.normal(0, 0.005, len(df))))\n        df['Low'] = df['Close'] * (1 - abs(np.random.normal(0, 0.005, len(df))))\n        df['Open'] = df['Close'].shift(1).fillna(df['Close'].iloc[0])\n        df['Volume'] = np.random.randint(1000, 10000, len(df))\n        \n        df.set_index('Date', inplace=True)\n        \n        return df[['Open', 'High', 'Low', 'Close', 'Volume']]\n\n\nclass StandaloneBacktester:\n    \"\"\"\n    مختبر مستقل بدون الحاجة لتحميل بيانات خارجية\n    \"\"\"\n    def __init__(self):\n        self.data_generator = RealisticDataGenerator()\n        self.results = {}\n    \n    def calculate_indicators(self, df):\n        \"\"\"\n        حساب المؤشرات الفنية\n        \"\"\"\n        # RSI\n        delta = df['Close'].diff()\n        gain = (delta.where(delta > 0, 0)).rolling(window=14).mean()\n        loss = (-delta.where(delta < 0, 0)).rolling(window=14).mean()\n        rs = gain / loss\n        df['RSI'] = 100 - (100 / (1 + rs))\n        \n        # MACD\n        ema12 = df['Close'].ewm(span=12).mean()\n        ema26 = df['Close'].ewm(span=26).mean()\n        df['MACD'] = ema12 - ema26\n        df['MACD_Signal'] = df['MACD'].ewm(span=9).mean()\n        df['MACD_Histogram'] = df['MACD'] - df['MACD_Signal']\n        \n        # Bollinger Bands\n        df['BB_Mid'] = df['Close'].rolling(window=20).mean()\n        df['BB_Std'] = df['Close'].rolling(window=20).std()\n        df['BB_Upper'] = df['BB_Mid'] + (df['BB_Std'] * 2)\n        df['BB_Lower'] = df['BB_Mid'] - (df['BB_Std'] * 2)\n        \n        return df\n    \n    def backtest(self, pair, year=2024, settings=None):\n        \"\"\"\n        تشغيل الاختبار الخلفي\n        \"\"\"\n        if settings is None:\n            settings = {\n                'initial_balance': 1000,\n                'lot_size': 0.1,\n                'tp_pips': 50,\n                'sl_pips': 100,\n                'max_dd_percent': 30,\n                'rsi_overbought': 70,\n                'rsi_oversold': 30\n            }\n        \n        print(f\"\\n🔄 توليد البيانات لـ {pair}...\", end='')\n        df = self.data_generator.generate_ohlc(pair, year)\n        print(\" ✅\")\n        \n        print(f\"📊 حساب المؤشرات...\", end='')\n        df = self.calculate_indicators(df)\n        print(\" ✅\")\n        \n        print(f\"⚙️ تشغيل المحاكاة...\", end='')\n        \n        balance = settings['initial_balance']\n        position = None\n        entry_price = 0\n        trades_count = 0\n        winning_trades = 0\n        losing_trades = 0\n        max_balance = balance\n        min_balance = balance\n        trades_list = []\n        \n        point = 0.0001 if pair != 'USDJPY' else 0.01\n        \n        for i in range(100, len(df)):\n            row = df.iloc[i]\n            prev_row = df.iloc[i-1]\n            \n            if pd.isna(row['RSI']) or pd.isna(row['MACD_Histogram']):\n                continue\n            \n            # إدارة الموضع الحالي\n            if position is not None:\n                current_price = row['Close']\n                pips = (current_price - entry_price) / point\n                \n                # فحص Stop Loss\n                if position == 'buy' and pips < -settings['sl_pips']:\n                    loss = settings['lot_size'] * 100000 * settings['sl_pips'] * point\n                    balance -= loss\n                    losing_trades += 1\n                    trades_list.append({\n                        'type': 'BUY',\n                        'entry': entry_price,\n                        'exit': current_price,\n                        'pips': -settings['sl_pips'],\n                        'result': 'LOSS'\n                    })\n                    position = None\n                \n                elif position == 'sell' and pips > settings['sl_pips']:\n                    loss = settings['lot_size'] * 100000 * settings['sl_pips'] * point\n                    balance -= loss\n                    losing_trades += 1\n                    trades_list.append({\n                        'type': 'SELL',\n                        'entry': entry_price,\n                        'exit': current_price,\n                        'pips': -settings['sl_pips'],\n                        'result': 'LOSS'\n                    })\n                    position = None\n                \n                # فحص Take Profit\n                elif position == 'buy' and pips >= settings['tp_pips']:\n                    profit = settings['lot_size'] * 100000 * settings['tp_pips'] * point\n                    balance += profit\n                    winning_trades += 1\n                    trades_list.append({\n                        'type': 'BUY',\n                        'entry': entry_price,\n                        'exit': current_price,\n                        'pips': settings['tp_pips'],\n                        'result': 'WIN'\n                    })\n                    position = None\n                \n                elif position == 'sell' and pips <= -settings['tp_pips']:\n                    profit = settings['lot_size'] * 100000 * settings['tp_pips'] * point\n                    balance += profit\n                    winning_trades += 1\n                    trades_list.append({\n                        'type': 'SELL',\n                        'entry': entry_price,\n                        'exit': current_price,\n                        'pips': settings['tp_pips'],\n                        'result': 'WIN'\n                    })\n                    position = None\n            \n            # إشارات الدخول\n            if position is None:\n                rsi = row['RSI']\n                macd_hist = row['MACD_Histogram']\n                \n                # شراء: RSI < 30 و MACD إيجابي\n                if rsi < settings['rsi_oversold'] and macd_hist > 0 and prev_row['MACD_Histogram'] <= 0:\n                    position = 'buy'\n                    entry_price = row['Close']\n                    trades_count += 1\n                \n                # بيع: RSI > 70 و MACD سلبي\n                elif rsi > settings['rsi_overbought'] and macd_hist < 0 and prev_row['MACD_Histogram'] >= 0:\n                    position = 'sell'\n                    entry_price = row['Close']\n                    trades_count += 1\n            \n            # تتبع الرصيد\n            max_balance = max(max_balance, balance)\n            min_balance = min(min_balance, balance)\n            \n            # فحص التراجع الأقصى\n            dd_percent = ((max_balance - balance) / max_balance) * 100\n            if dd_percent > settings['max_dd_percent']:\n                break\n        \n        print(\" ✅\")\n        \n        # حساب الإحصائيات\n        profit_loss = balance - settings['initial_balance']\n        roi = (profit_loss / settings['initial_balance']) * 100\n        max_dd = ((max_balance - min_balance) / max_balance) * 100\n        win_rate = (winning_trades / trades_count * 100) if trades_count > 0 else 0\n        \n        result = {\n            'pair': pair,\n            'year': year,\n            'initial_balance': settings['initial_balance'],\n            'final_balance': round(balance, 2),\n            'profit_loss': round(profit_loss, 2),\n            'roi_percent': round(roi, 2),\n            'total_trades': trades_count,\n            'winning_trades': winning_trades,\n            'losing_trades': losing_trades,\n            'win_rate_percent': round(win_rate, 2),\n            'max_drawdown_percent': round(max_dd, 2),\n            'settings': settings,\n            'trades_sample': trades_list[:10]\n        }\n        \n        self.results[pair] = result\n        return result\n    \n    def print_results(self, result):\n        \"\"\"\n        طباعة النتائج بشكل جميل\n        \"\"\"\n        print(f\"\\n{'='*80}\")\n        print(f\"📊 نتائج الاختبار: {result['pair']} - {result['year']}\")\n        print(f\"{'='*80}\")\n        \n        print(f\"\\n💰 النتائج المالية:\")\n        print(f\"   • الرصيد الأولي: ${result['initial_balance']}\")\n        print(f\"   • الرصيد النهائي: ${result['final_balance']}\")\n        print(f\"   • الربح/الخسارة: ${result['profit_loss']}\")\n        print(f\"   • العائد (ROI): {result['roi_percent']}%\")\n        \n        print(f\"\\n📈 إحصائيات التداول:\")\n        print(f\"   • إجمالي العمليات: {result['total_trades']}\")\n        print(f\"   • عمليات رابحة: {result['winning_trades']}\")\n        print(f\"   • عمليات خاسرة: {result['losing_trades']}\")\n        print(f\"   • معدل الفوز: {result['win_rate_percent']}%\")\n        \n        print(f\"\\n⚠️ إدارة المخاطر:\")\n        print(f\"   • أقصى تراجع: {result['max_drawdown_percent']}%\")\n        \n        if result['trades_sample']:\n            print(f\"\\n📋 عينة من العمليات (أول 10):\")\n            for i, trade in enumerate(result['trades_sample'], 1):\n                emoji = '✅' if trade['result'] == 'WIN' else '❌'\n                print(f\"   {i}. {emoji} {trade['type']:5} | Entry: {trade['entry']:.5f} | \"\n                      f\"Exit: {trade['exit']:.5f} | {trade['pips']:+.0f} pips\")\n        \n        print(f\"\\n{'='*80}\\n\")\n    \n    def test_all_pairs(self, year=2024):\n        \"\"\"\n        اختبار جميع الأزواج\n        \"\"\"\n        pairs = [\n            'EURUSD', 'GBPUSD', 'USDCHF', 'USDJPY',\n            'AUDUSD', 'USDCAD', 'EURCHF', 'EURGBP', 'EURJPY'\n        ]\n        \n        print(f\"\\n{'='*80}\")\n        print(f\"🌍 اختبار جميع أزواج العملات - {year}\")\n        print(f\"{'='*80}\")\n        \n        results_summary = []\n        \n        for pair in pairs:\n            print(f\"\\n⏳ اختبار {pair}...\")\n            result = self.backtest(pair, year)\n            self.print_results(result)\n            \n            results_summary.append({\n                'Pair': pair,\n                'Final Balance': f\"${result['final_balance']}\",\n                'P&L': f\"${result['profit_loss']}\",\n                'ROI %': f\"{result['roi_percent']:.2f}%\",\n                'Trades': result['total_trades'],\n                'Win Rate %': f\"{result['win_rate_percent']:.2f}%\",\n                'Max DD %': f\"{result['max_drawdown_percent']:.2f}%\"\n            })\n        \n        # طباعة الملخص\n        self.print_summary(results_summary)\n        return self.results\n    \n    def print_summary(self, results_summary):\n        \"\"\"\n        طباعة ملخص النتائج\n        \"\"\"\n        print(f\"\\n{'='*100}\")\n        print(\"📊 ملخص النتائج لجميع الأزواج\")\n        print(f\"{'='*100}\\n\")\n        \n        df_summary = pd.DataFrame(results_summary)\n        print(df_summary.to_string(index=False))\n        \n        # إحصائيات عامة\n        total_pl = sum([float(r['P&L'].replace('$', '')) for r in results_summary])\n        avg_wr = sum([float(r['Win Rate %'].replace('%', '')) for r in results_summary]) / len(results_summary)\n        \n        print(f\"\\n{'='*100}\")\n        print(f\"🎯 الإحصائيات العامة:\")\n        print(f\"   • إجمالي الربح/الخسارة: ${total_pl:.2f}\")\n        print(f\"   • متوسط معدل الفوز: {avg_wr:.2f}%\")\n        print(f\"   • عدد الأزواج المختبرة: {len(results_summary)}\")\n        print(f\"{'='*100}\\n\")\n    \n    def export_results(self, filename='backtesting_results.json'):\n        \"\"\"\n        تصدير النتائج\n        \"\"\"\n        clean_results = {}\n        for pair, result in self.results.items():\n            clean = result.copy()\n            clean.pop('trades_sample', None)\n            clean_results[pair] = clean\n        \n        output = {\n            'timestamp': datetime.now().isoformat(),\n            'results': clean_results\n        }\n        \n        with open(filename, 'w', encoding='utf-8') as f:\n            json.dump(output, f, ensure_ascii=False, indent=2)\n        \n        print(f\"✅ تم حفظ النتائج في: {filename}\")\n\n\nif __name__ == \"__main__\":\n    print(\"\\n\" + \"=\"*80)\n    print(\"🚀 نظام الاختبار الخلفي للمتداول الآلي\")\n    print(\"Forex Hacked Pro Backtesting System\")\n    print(\"=\"*80)\n    \n    backtester = StandaloneBacktester()\n    \n    # اختبار جميع الأزواج\n    all_results = backtester.test_all_pairs(year=2024)\n    \n    # تصدير النتائج\n    backtester.export_results('backtesting_results.json')\n    \n    print(\"\\n✅ اكتمل الاختبار بنجاح!\")\n    print(\"📁 تحقق من ملف backtesting_results.json للنتائج المفصلة\\n\")\n
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+مختبر مستقل - لا يحتاج لتحميل البيانات من الإنترنت
+يستخدم بيانات محاكاة واقعية جداً
+"""
+
+import numpy as np
+import pandas as pd
+from datetime import datetime, timedelta
+import json
+import os
+
+class RealisticDataGenerator:
+    """
+    توليد بيانات فوركس واقعية جداً تحاكي السلوك الفعلي
+    """
+    def __init__(self, seed=42):
+        np.random.seed(seed)
+
+    def generate_ohlc(self, pair, year=2024, num_days=365):
+        """
+        توليد بيانات OHLC واقعية
+        """
+        # الأسعار الافتتاحية التقريبية لكل زوج
+        opening_prices = {
+            'EURUSD': 1.0800,
+            'GBPUSD': 1.2700,
+            'USDCHF': 0.9200,
+            'USDJPY': 110.50,
+            'AUDUSD': 0.6700,
+            'USDCAD': 1.3600,
+            'EURCHF': 0.9900,
+            'EURGBP': 0.8500,
+            'EURJPY': 119.50
+        }
+
+        # التقلب اليومي لكل زوج (volatility)
+        volatility = {
+            'EURUSD': 0.008,
+            'GBPUSD': 0.010,
+            'USDCHF': 0.009,
+            'USDJPY': 0.012,
+            'AUDUSD': 0.011,
+            'USDCAD': 0.009,
+            'EURCHF': 0.008,
+            'EURGBP': 0.009,
+            'EURJPY': 0.011
+        }
+
+        start_price = opening_prices.get(pair, 1.0)
+        daily_vol = volatility.get(pair, 0.01)
+
+        # توليد البيانات
+        dates = []
+        closes = []
+        current_price = start_price
+
+        for day in range(num_days * 24):  # ساعة واحدة في كل حلقة
+            # حركة عشوائية واقعية (Random Walk with Drift)
+            drift = 0.0001
+            shock = np.random.normal(0, daily_vol / 24)
+            current_price *= (1 + drift/24 + shock)
+
+            closes.append(current_price)
+
+        # إنشاء DataFrame
+        start_date = datetime(year, 1, 1)
+        dates = [start_date + timedelta(hours=i) for i in range(len(closes))]
+
+        df = pd.DataFrame({
+            'Date': dates,
+            'Close': closes
+        })
+
+        # توليد OHLC من Close
+        df['High'] = df['Close'] * (1 + abs(np.random.normal(0, 0.005, len(df))))
+        df['Low'] = df['Close'] * (1 - abs(np.random.normal(0, 0.005, len(df))))
+        df['Open'] = df['Close'].shift(1).fillna(df['Close'].iloc[0])
+        df['Volume'] = np.random.randint(1000, 10000, len(df))
+
+        df.set_index('Date', inplace=True)
+
+        return df[['Open', 'High', 'Low', 'Close', 'Volume']]
+
+
+class StandaloneBacktester:
+    """
+    مختبر مستقل بدون الحاجة لتحميل بيانات خارجية
+    """
+    def __init__(self):
+        self.data_generator = RealisticDataGenerator()
+        self.results = {}
+
+    def calculate_indicators(self, df):
+        """
+        حساب المؤشرات الفنية
+        """
+        # RSI
+        delta = df['Close'].diff()
+        gain = (delta.where(delta > 0, 0)).rolling(window=14).mean()
+        loss = (-delta.where(delta < 0, 0)).rolling(window=14).mean()
+        rs = gain / loss
+        df['RSI'] = 100 - (100 / (1 + rs))
+
+        # MACD
+        ema12 = df['Close'].ewm(span=12).mean()
+        ema26 = df['Close'].ewm(span=26).mean()
+        df['MACD'] = ema12 - ema26
+        df['MACD_Signal'] = df['MACD'].ewm(span=9).mean()
+        df['MACD_Histogram'] = df['MACD'] - df['MACD_Signal']
+
+        # Bollinger Bands
+        df['BB_Mid'] = df['Close'].rolling(window=20).mean()
+        df['BB_Std'] = df['Close'].rolling(window=20).std()
+        df['BB_Upper'] = df['BB_Mid'] + (df['BB_Std'] * 2)
+        df['BB_Lower'] = df['BB_Mid'] - (df['BB_Std'] * 2)
+
+        return df
+
+    def backtest(self, pair, year=2024, settings=None):
+        """
+        تشغيل الاختبار الخلفي
+        """
+        if settings is None:
+            settings = {
+                'initial_balance': 1000,
+                'lot_size': 0.1,
+                'tp_pips': 50,
+                'sl_pips': 100,
+                'max_dd_percent': 30,
+                'rsi_overbought': 70,
+                'rsi_oversold': 30
+            }
+
+        print(f"\
+🔄 توليد البيانات لـ {pair}...", end='')
+        df = self.data_generator.generate_ohlc(pair, year)
+        print(" ✅")
+
+        print(f"📊 حساب المؤشرات...", end='')
+        df = self.calculate_indicators(df)
+        print(" ✅")
+
+        print(f"⚙️ تشغيل المحاكاة...", end='')
+
+        balance = settings['initial_balance']
+        position = None
+        entry_price = 0
+        trades_count = 0
+        winning_trades = 0
+        losing_trades = 0
+        max_balance = balance
+        min_balance = balance
+        trades_list = []
+
+        point = 0.0001 if pair != 'USDJPY' else 0.01
+
+        for i in range(100, len(df)):
+            row = df.iloc[i]
+            prev_row = df.iloc[i-1]
+
+            if pd.isna(row['RSI']) or pd.isna(row['MACD_Histogram']):
+                continue
+
+            # إدارة الموضع الحالي
+            if position is not None:
+                current_price = row['Close']
+                pips = (current_price - entry_price) / point
+
+                # فحص Stop Loss
+                if position == 'buy' and pips < -settings['sl_pips']:
+                    loss = settings['lot_size'] * 100000 * settings['sl_pips'] * point
+                    balance -= loss
+                    losing_trades += 1
+                    trades_list.append({
+                        'type': 'BUY',
+                        'entry': entry_price,
+                        'exit': current_price,
+                        'pips': -settings['sl_pips'],
+                        'result': 'LOSS'
+                    })
+                    position = None
+
+                elif position == 'sell' and pips > settings['sl_pips']:
+                    loss = settings['lot_size'] * 100000 * settings['sl_pips'] * point
+                    balance -= loss
+                    losing_trades += 1
+                    trades_list.append({
+                        'type': 'SELL',
+                        'entry': entry_price,
+                        'exit': current_price,
+                        'pips': -settings['sl_pips'],
+                        'result': 'LOSS'
+                    })
+                    position = None
+
+                # فحص Take Profit
+                elif position == 'buy' and pips >= settings['tp_pips']:
+                    profit = settings['lot_size'] * 100000 * settings['tp_pips'] * point
+                    balance += profit
+                    winning_trades += 1
+                    trades_list.append({
+                        'type': 'BUY',
+                        'entry': entry_price,
+                        'exit': current_price,
+                        'pips': settings['tp_pips'],
+                        'result': 'WIN'
+                    })
+                    position = None
+
+                elif position == 'sell' and pips <= -settings['tp_pips']:
+                    profit = settings['lot_size'] * 100000 * settings['tp_pips'] * point
+                    balance += profit
+                    winning_trades += 1
+                    trades_list.append({
+                        'type': 'SELL',
+                        'entry': entry_price,
+                        'exit': current_price,
+                        'pips': settings['tp_pips'],
+                        'result': 'WIN'
+                    })
+                    position = None
+
+            # إشارات الدخول
+            if position is None:
+                rsi = row['RSI']
+                macd_hist = row['MACD_Histogram']
+
+                # شراء: RSI < 30 و MACD إيجابي
+                if rsi < settings['rsi_oversold'] and macd_hist > 0 and prev_row['MACD_Histogram'] <= 0:
+                    position = 'buy'
+                    entry_price = row['Close']
+                    trades_count += 1
+
+                # بيع: RSI > 70 و MACD سلبي
+                elif rsi > settings['rsi_overbought'] and macd_hist < 0 and prev_row['MACD_Histogram'] >= 0:
+                    position = 'sell'
+                    entry_price = row['Close']
+                    trades_count += 1
+
+            # تتبع الرصيد
+            max_balance = max(max_balance, balance)
+            min_balance = min(min_balance, balance)
+
+            # فحص التراجع الأقصى
+            dd_percent = ((max_balance - balance) / max_balance) * 100
+            if dd_percent > settings['max_dd_percent']:
+                break
+
+        print(" ✅")
+
+        # حساب الإحصائيات
+        profit_loss = balance - settings['initial_balance']
+        roi = (profit_loss / settings['initial_balance']) * 100
+        max_dd = ((max_balance - min_balance) / max_balance) * 100
+        win_rate = (winning_trades / trades_count * 100) if trades_count > 0 else 0
+
+        result = {
+            'pair': pair,
+            'year': year,
+            'initial_balance': settings['initial_balance'],
+            'final_balance': round(balance, 2),
+            'profit_loss': round(profit_loss, 2),
+            'roi_percent': round(roi, 2),
+            'total_trades': trades_count,
+            'winning_trades': winning_trades,
+            'losing_trades': losing_trades,
+            'win_rate_percent': round(win_rate, 2),
+            'max_drawdown_percent': round(max_dd, 2),
+            'settings': settings,
+            'trades_sample': trades_list[:10]
+        }
+
+        self.results[pair] = result
+        return result
+
+    def print_results(self, result):
+        """
+        طباعة النتائج بشكل جميل
+        """
+        print(f"\
+{'='*80}")
+        print(f"📊 نتائج الاختبار: {result['pair']} - {result['year']}")
+        print(f"{'='*80}")
+
+        print(f"\
+💰 النتائج المالية:")
+        print(f"   • الرصيد الأولي: ${result['initial_balance']}")
+        print(f"   • الرصيد النهائي: ${result['final_balance']}")
+        print(f"   • الربح/الخسارة: ${result['profit_loss']}")
+        print(f"   • العائد (ROI): {result['roi_percent']}%")
+
+        print(f"\
+📈 إحصائيات التداول:")
+        print(f"   • إجمالي العمليات: {result['total_trades']}")
+        print(f"   • عمليات رابحة: {result['winning_trades']}")
+        print(f"   • عمليات خاسرة: {result['losing_trades']}")
+        print(f"   • معدل الفوز: {result['win_rate_percent']}%")
+
+        print(f"\
+⚠️ إدارة المخاطر:")
+        print(f"   • أقصى تراجع: {result['max_drawdown_percent']}%")
+
+        if result['trades_sample']:
+            print(f"\
+📋 عينة من العمليات (أول 10):")
+            for i, trade in enumerate(result['trades_sample'], 1):
+                emoji = '✅' if trade['result'] == 'WIN' else '❌'
+                print(f"   {i}. {emoji} {trade['type']:5} | Entry: {trade['entry']:.5f} | "
+                      f"Exit: {trade['exit']:.5f} | {trade['pips']:+.0f} pips")
+
+        print(f"\
+{'='*80}\
+")
+
+    def test_all_pairs(self, year=2024):
+        """
+        اختبار جميع الأزواج
+        """
+        pairs = [
+            'EURUSD', 'GBPUSD', 'USDCHF', 'USDJPY',
+            'AUDUSD', 'USDCAD', 'EURCHF', 'EURGBP', 'EURJPY'
+        ]
+
+        print(f"\
+{'='*80}")
+        print(f"🌍 اختبار جميع أزواج العملات - {year}")
+        print(f"{'='*80}")
+
+        results_summary = []
+
+        for pair in pairs:
+            print(f"\
+⏳ اختبار {pair}...")
+            result = self.backtest(pair, year)
+            self.print_results(result)
+
+            results_summary.append({
+                'Pair': pair,
+                'Final Balance': f"${result['final_balance']}",
+                'P&L': f"${result['profit_loss']}",
+                'ROI %': f"{result['roi_percent']:.2f}%",
+                'Trades': result['total_trades'],
+                'Win Rate %': f"{result['win_rate_percent']:.2f}%",
+                'Max DD %': f"{result['max_drawdown_percent']:.2f}%"
+            })
+
+        # طباعة الملخص
+        self.print_summary(results_summary)
+        return self.results
+
+    def print_summary(self, results_summary):
+        """
+        طباعة ملخص النتائج
+        """
+        print(f"\
+{'='*100}")
+        print("📊 ملخص النتائج لجميع الأزواج")
+        print(f"{'='*100}\
+")
+
+        df_summary = pd.DataFrame(results_summary)
+        print(df_summary.to_string(index=False))
+
+        # إحصائيات عامة
+        total_pl = sum([float(r['P&L'].replace('$', '')) for r in results_summary])
+        avg_wr = sum([float(r['Win Rate %'].replace('%', '')) for r in results_summary]) / len(results_summary)
+
+        print(f"\
+{'='*100}")
+        print(f"🎯 الإحصائيات العامة:")
+        print(f"   • إجمالي الربح/الخسارة: ${total_pl:.2f}")
+        print(f"   • متوسط معدل الفوز: {avg_wr:.2f}%")
+        print(f"   • عدد الأزواج المختبرة: {len(results_summary)}")
+        print(f"{'='*100}\
+")
+
+    def export_results(self, filename='backtesting_results.json'):
+        """
+        تصدير النتائج
+        """
+        clean_results = {}
+        for pair, result in self.results.items():
+            clean = result.copy()
+            clean.pop('trades_sample', None)
+            clean_results[pair] = clean
+
+        output = {
+            'timestamp': datetime.now().isoformat(),
+            'results': clean_results
+        }
+
+        with open(filename, 'w', encoding='utf-8') as f:
+            json.dump(output, f, ensure_ascii=False, indent=2)
+
+        print(f"✅ تم حفظ النتائج في: {filename}")
+
+
+if __name__ == "__main__":
+    print("\
+" + "="*80)
+    print("🚀 نظام الاختبار الخلفي للمتداول الآلي")
+    print("Forex Hacked Pro Backtesting System")
+    print("="*80)
+
+    backtester = StandaloneBacktester()
+
+    # اختبار جميع الأزواج
+    all_results = backtester.test_all_pairs(year=2024)
+
+    # تصدير النتائج
+    backtester.export_results('backtesting_results.json')
+
+    print("\
+✅ اكتمل الاختبار بنجاح!")
+    print("📁 تحقق من ملف backtesting_results.json للنتائج المفصلة\
+")

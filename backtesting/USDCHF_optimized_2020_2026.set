@@ -1,0 +1,26 @@
+;====== Forex Hacked Pro Optimized Set File ======
+; Pair: USDCHF
+; Optimized Period: 2020-01-01 to 2026-08-14
+; Generated At: 2026-08-14T14:34:28.392381
+;=================================================
+
+______General_Settings________=------------General Settings------------
+Lots=0.10000000
+TakeProfit=30.00000000
+PipStarter=20.00000000
+Booster=1.55000000
+
+________Misc_Settings________=--------------Misc Settings--------------
+ContinueTrading=1
+MM=0
+chartDisplay=1
+
+____Additional_Safe_Guards_____=----------Additional Safe Guards----------
+UseStoplossPct=1
+StoplossPct=30.00000000
+
+___________System_1____________=------------------System 1 Settings-------------------
+UseStrategy_1=1
+RSI_Oversold=35.00000000
+RSI_Overbought=75.00000000
+StopLoss=60.00000000
