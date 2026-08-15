@@ -1,0 +1,610 @@
+{
+  "generated_at": "2026-08-15T08:07:06.718254",
+  "broker_profile": "STANDARD",
+  "results": {
+    "BTC-USD": {
+      "symbol": "BTC-USD",
+      "asset_name": "Bitcoin",
+      "category": "Crypto",
+      "broker_profile": "STANDARD",
+      "initial_balance": 10000,
+      "final_balance": 10066.67,
+      "profit_loss": 66.67,
+      "roi_percent": 0.67,
+      "total_trades": 9,
+      "winning_trades": 4,
+      "losing_trades": 5,
+      "win_rate_percent": 44.44,
+      "max_drawdown_percent": 6.62,
+      "trades_sample": [
+        {
+          "date": "2024-10-28",
+          "type": "SELL",
+          "entry": 66642.4090625,
+          "exit": 68641.681334375,
+          "pnl": -200.0,
+          "result": "LOSS"
+        },
+        {
+          "date": "2025-05-18",
+          "type": "SELL",
+          "entry": 103191.0809375,
+          "exit": 106286.813365625,
+          "pnl": -200.0,
+          "result": "LOSS"
+        },
+        {
+          "date": "2025-05-21",
+          "type": "SELL",
+          "entry": 105606.1746875,
+          "exit": 108774.35992812499,
+          "pnl": -200.0,
+          "result": "LOSS"
+        },
+        {
+          "date": "2025-08-01",
+          "type": "SELL",
+          "entry": 117439.5340625,
+          "exit": 112741.9527,
+          "pnl": 266.67,
+          "result": "WIN"
+        },
+        {
+          "date": "2025-12-01",
+          "type": "BUY",
+          "entry": 91285.38,
+          "exit": 88546.8186,
+          "pnl": -200.0,
+          "result": "LOSS"
+        }
+      ]
+    },
+    "ETH-USD": {
+      "symbol": "ETH-USD",
+      "asset_name": "Ethereum",
+      "category": "Crypto",
+      "broker_profile": "STANDARD",
+      "initial_balance": 10000,
+      "final_balance": 10400.0,
+      "profit_loss": 400.0,
+      "roi_percent": 4.0,
+      "total_trades": 5,
+      "winning_trades": 3,
+      "losing_trades": 2,
+      "win_rate_percent": 60.0,
+      "max_drawdown_percent": 7.55,
+      "trades_sample": [
+        {
+          "date": "2025-02-17",
+          "type": "BUY",
+          "entry": 2726.097552734375,
+          "exit": 2644.3146261523434,
+          "pnl": -200.0,
+          "result": "LOSS"
+        },
+        {
+          "date": "2025-08-01",
+          "type": "SELL",
+          "entry": 3808.19566015625,
+          "exit": 3655.86783375,
+          "pnl": 266.67,
+          "result": "WIN"
+        },
+        {
+          "date": "2025-11-28",
+          "type": "BUY",
+          "entry": 2957.942279296875,
+          "exit": 3076.25997046875,
+          "pnl": 266.67,
+          "result": "WIN"
+        },
+        {
+          "date": "2026-06-15",
+          "type": "BUY",
+          "entry": 1724.61928125,
+          "exit": 1793.6040525,
+          "pnl": 266.67,
+          "result": "WIN"
+        },
+        {
+          "date": "2026-06-30",
+          "type": "BUY",
+          "entry": 1610.211810546875,
+          "exit": 1561.9054562304689,
+          "pnl": -200.0,
+          "result": "LOSS"
+        }
+      ]
+    },
+    "SOL-USD": {
+      "symbol": "SOL-USD",
+      "asset_name": "Solana",
+      "category": "Crypto",
+      "broker_profile": "STANDARD",
+      "initial_balance": 10000,
+      "final_balance": 10866.67,
+      "profit_loss": 866.67,
+      "roi_percent": 8.67,
+      "total_trades": 5,
+      "winning_trades": 4,
+      "losing_trades": 1,
+      "win_rate_percent": 80.0,
+      "max_drawdown_percent": 7.98,
+      "trades_sample": [
+        {
+          "date": "2025-09-22",
+          "type": "SELL",
+          "entry": 236.56795471191407,
+          "exit": 227.1052365234375,
+          "pnl": 266.67,
+          "result": "WIN"
+        },
+        {
+          "date": "2025-11-25",
+          "type": "BUY",
+          "entry": 138.37885314941406,
+          "exit": 134.22748755493163,
+          "pnl": -200.0,
+          "result": "LOSS"
+        },
+        {
+          "date": "2025-12-29",
+          "type": "BUY",
+          "entry": 122.20345336914062,
+          "exit": 127.09159150390624,
+          "pnl": 266.67,
+          "result": "WIN"
+        },
+        {
+          "date": "2026-04-11",
+          "type": "BUY",
+          "entry": 82.58919555664062,
+          "exit": 85.89276337890625,
+          "pnl": 266.67,
+          "result": "WIN"
+        },
+        {
+          "date": "2026-06-15",
+          "type": "BUY",
+          "entry": 71.17368347167968,
+          "exit": 74.02063081054688,
+          "pnl": 266.67,
+          "result": "WIN"
+        }
+      ]
+    },
+    "EURUSD": {
+      "symbol": "EURUSD",
+      "asset_name": "EUR/USD",
+      "category": "Forex",
+      "broker_profile": "STANDARD",
+      "initial_balance": 10000,
+      "final_balance": 10350.0,
+      "profit_loss": 350.0,
+      "roi_percent": 3.5,
+      "total_trades": 5,
+      "winning_trades": 3,
+      "losing_trades": 2,
+      "win_rate_percent": 60.0,
+      "max_drawdown_percent": 7.25,
+      "trades_sample": [
+        {
+          "date": "2025-01-02",
+          "type": "BUY",
+          "entry": 1.0423781056976318,
+          "exit": 1.0340390808520508,
+          "pnl": -200.0,
+          "result": "LOSS"
+        },
+        {
+          "date": "2025-04-03",
+          "type": "SELL",
+          "entry": 1.0835162023925782,
+          "exit": 1.0921843320117188,
+          "pnl": -200.0,
+          "result": "LOSS"
+        },
+        {
+          "date": "2025-05-09",
+          "type": "SELL",
+          "entry": 1.1324299196624756,
+          "exit": 1.121105620465851,
+          "pnl": 250.0,
+          "result": "WIN"
+        },
+        {
+          "date": "2025-07-15",
+          "type": "SELL",
+          "entry": 1.1723966221237183,
+          "exit": 1.1606726559024811,
+          "pnl": 250.0,
+          "result": "WIN"
+        },
+        {
+          "date": "2026-08-03",
+          "type": "BUY",
+          "entry": 1.1438321252441406,
+          "exit": 1.155270446496582,
+          "pnl": 250.0,
+          "result": "WIN"
+        }
+      ]
+    },
+    "GBPUSD": {
+      "symbol": "GBPUSD",
+      "asset_name": "GBP/USD",
+      "category": "Forex",
+      "broker_profile": "STANDARD",
+      "initial_balance": 10000,
+      "final_balance": 9900.0,
+      "profit_loss": -100.0,
+      "roi_percent": -1.0,
+      "total_trades": 5,
+      "winning_trades": 2,
+      "losing_trades": 3,
+      "win_rate_percent": 40.0,
+      "max_drawdown_percent": 6.0,
+      "trades_sample": [
+        {
+          "date": "2024-12-19",
+          "type": "BUY",
+          "entry": 1.2697550231933594,
+          "exit": 1.2595969830078126,
+          "pnl": -200.0,
+          "result": "LOSS"
+        },
+        {
+          "date": "2025-04-03",
+          "type": "SELL",
+          "entry": 1.2923822229385376,
+          "exit": 1.3027212807220458,
+          "pnl": -200.0,
+          "result": "LOSS"
+        },
+        {
+          "date": "2025-05-06",
+          "type": "SELL",
+          "entry": 1.3271179025650024,
+          "exit": 1.3377348457855225,
+          "pnl": -200.0,
+          "result": "LOSS"
+        },
+        {
+          "date": "2025-07-11",
+          "type": "SELL",
+          "entry": 1.3622857158660888,
+          "exit": 1.3486628587074279,
+          "pnl": 250.0,
+          "result": "WIN"
+        },
+        {
+          "date": "2025-11-27",
+          "type": "BUY",
+          "entry": 1.3128588373184205,
+          "exit": 1.3259874256916047,
+          "pnl": 250.0,
+          "result": "WIN"
+        }
+      ]
+    },
+    "USDJPY": {
+      "symbol": "USDJPY",
+      "asset_name": "USD/JPY",
+      "category": "Forex",
+      "broker_profile": "STANDARD",
+      "initial_balance": 10000,
+      "final_balance": 10100.0,
+      "profit_loss": 100.0,
+      "roi_percent": 1.0,
+      "total_trades": 4,
+      "winning_trades": 2,
+      "losing_trades": 2,
+      "win_rate_percent": 50.0,
+      "max_drawdown_percent": 2.91,
+      "trades_sample": [
+        {
+          "date": "2024-09-23",
+          "type": "BUY",
+          "entry": 142.86500170898438,
+          "exit": 144.29365172607422,
+          "pnl": 250.0,
+          "result": "WIN"
+        },
+        {
+          "date": "2025-03-06",
+          "type": "BUY",
+          "entry": 149.8059959716797,
+          "exit": 148.60754800390626,
+          "pnl": -200.0,
+          "result": "LOSS"
+        },
+        {
+          "date": "2025-12-01",
+          "type": "SELL",
+          "entry": 156.27699658203124,
+          "exit": 154.71422661621094,
+          "pnl": 250.0,
+          "result": "WIN"
+        },
+        {
+          "date": "2026-07-21",
+          "type": "SELL",
+          "entry": 161.44499584960937,
+          "exit": 162.73655581640625,
+          "pnl": -200.0,
+          "result": "LOSS"
+        }
+      ]
+    },
+    "AAPL": {
+      "symbol": "AAPL",
+      "asset_name": "Apple Inc.",
+      "category": "Stocks",
+      "broker_profile": "STANDARD",
+      "initial_balance": 10000,
+      "final_balance": 10550.0,
+      "profit_loss": 550.0,
+      "roi_percent": 5.5,
+      "total_trades": 4,
+      "winning_trades": 3,
+      "losing_trades": 1,
+      "win_rate_percent": 75.0,
+      "max_drawdown_percent": 5.21,
+      "trades_sample": [
+        {
+          "date": "2024-10-31",
+          "type": "SELL",
+          "entry": 229.4802801513672,
+          "exit": 223.743273147583,
+          "pnl": 250.0,
+          "result": "WIN"
+        },
+        {
+          "date": "2025-08-28",
+          "type": "SELL",
+          "entry": 226.31395935058595,
+          "exit": 230.84023853759766,
+          "pnl": -200.0,
+          "result": "LOSS"
+        },
+        {
+          "date": "2025-10-10",
+          "type": "SELL",
+          "entry": 255.52607177734376,
+          "exit": 249.13791998291015,
+          "pnl": 250.0,
+          "result": "WIN"
+        },
+        {
+          "date": "2025-12-18",
+          "type": "SELL",
+          "entry": 277.12565063476563,
+          "exit": 270.1975093688965,
+          "pnl": 250.0,
+          "result": "WIN"
+        }
+      ]
+    },
+    "NVDA": {
+      "symbol": "NVDA",
+      "asset_name": "NVIDIA Corp.",
+      "category": "Stocks",
+      "broker_profile": "STANDARD",
+      "initial_balance": 10000,
+      "final_balance": 9850.0,
+      "profit_loss": -150.0,
+      "roi_percent": -1.5,
+      "total_trades": 3,
+      "winning_trades": 1,
+      "losing_trades": 2,
+      "win_rate_percent": 33.33,
+      "max_drawdown_percent": 4.0,
+      "trades_sample": [
+        {
+          "date": "2025-06-16",
+          "type": "SELL",
+          "entry": 142.6250146484375,
+          "exit": 145.47751494140627,
+          "pnl": -200.0,
+          "result": "LOSS"
+        },
+        {
+          "date": "2025-07-23",
+          "type": "SELL",
+          "entry": 166.79284606933595,
+          "exit": 170.12870299072267,
+          "pnl": -200.0,
+          "result": "LOSS"
+        },
+        {
+          "date": "2026-05-26",
+          "type": "SELL",
+          "entry": 219.23945556640626,
+          "exit": 213.7584691772461,
+          "pnl": 250.0,
+          "result": "WIN"
+        }
+      ]
+    },
+    "TSLA": {
+      "symbol": "TSLA",
+      "asset_name": "Tesla Inc.",
+      "category": "Stocks",
+      "broker_profile": "STANDARD",
+      "initial_balance": 10000,
+      "final_balance": 10300.0,
+      "profit_loss": 300.0,
+      "roi_percent": 3.0,
+      "total_trades": 3,
+      "winning_trades": 2,
+      "losing_trades": 1,
+      "win_rate_percent": 66.67,
+      "max_drawdown_percent": 4.85,
+      "trades_sample": [
+        {
+          "date": "2024-12-24",
+          "type": "SELL",
+          "entry": 430.58250610351564,
+          "exit": 439.19415622558597,
+          "pnl": -200.0,
+          "result": "LOSS"
+        },
+        {
+          "date": "2025-03-21",
+          "type": "BUY",
+          "entry": 236.27749450683595,
+          "exit": 242.18443186950682,
+          "pnl": 250.0,
+          "result": "WIN"
+        },
+        {
+          "date": "2026-08-13",
+          "type": "BUY",
+          "entry": 328.5974865722656,
+          "exit": 336.8124237365722,
+          "pnl": 250.0,
+          "result": "WIN"
+        }
+      ]
+    },
+    "MSFT": {
+      "symbol": "MSFT",
+      "asset_name": "Microsoft",
+      "category": "Stocks",
+      "broker_profile": "STANDARD",
+      "initial_balance": 10000,
+      "final_balance": 9650.0,
+      "profit_loss": -350.0,
+      "roi_percent": -3.5,
+      "total_trades": 4,
+      "winning_trades": 1,
+      "losing_trades": 3,
+      "win_rate_percent": 25.0,
+      "max_drawdown_percent": 6.0,
+      "trades_sample": [
+        {
+          "date": "2025-05-27",
+          "type": "SELL",
+          "entry": 446.6026708984375,
+          "exit": 455.53472431640625,
+          "pnl": -200.0,
+          "result": "LOSS"
+        },
+        {
+          "date": "2025-07-09",
+          "type": "SELL",
+          "entry": 488.1408483886719,
+          "exit": 497.90366535644534,
+          "pnl": -200.0,
+          "result": "LOSS"
+        },
+        {
+          "date": "2025-12-15",
+          "type": "BUY",
+          "entry": 481.02788330078124,
+          "exit": 471.4073256347656,
+          "pnl": -200.0,
+          "result": "LOSS"
+        },
+        {
+          "date": "2026-04-08",
+          "type": "BUY",
+          "entry": 372.0841271972656,
+          "exit": 381.38623037719725,
+          "pnl": 250.0,
+          "result": "WIN"
+        }
+      ]
+    },
+    "GOLD": {
+      "symbol": "GOLD",
+      "asset_name": "Gold Futures",
+      "category": "Commodities",
+      "broker_profile": "STANDARD",
+      "initial_balance": 10000,
+      "final_balance": 10133.33,
+      "profit_loss": 133.33,
+      "roi_percent": 1.33,
+      "total_trades": 4,
+      "winning_trades": 2,
+      "losing_trades": 2,
+      "win_rate_percent": 50.0,
+      "max_drawdown_percent": 5.16,
+      "trades_sample": [
+        {
+          "date": "2024-10-17",
+          "type": "SELL",
+          "entry": 2644.650048828125,
+          "exit": 2684.3197995605465,
+          "pnl": -200.0,
+          "result": "LOSS"
+        },
+        {
+          "date": "2024-11-06",
+          "type": "SELL",
+          "entry": 2735.95009765625,
+          "exit": 2681.231095703125,
+          "pnl": 266.67,
+          "result": "WIN"
+        },
+        {
+          "date": "2025-05-01",
+          "type": "SELL",
+          "entry": 3304.85,
+          "exit": 3238.7529999999997,
+          "pnl": 266.67,
+          "result": "WIN"
+        },
+        {
+          "date": "2025-12-11",
+          "type": "SELL",
+          "entry": 4196.24990234375,
+          "exit": 4259.193650878906,
+          "pnl": -200.0,
+          "result": "LOSS"
+        }
+      ]
+    },
+    "SILVER": {
+      "symbol": "SILVER",
+      "asset_name": "Silver Futures",
+      "category": "Commodities",
+      "broker_profile": "STANDARD",
+      "initial_balance": 10000,
+      "final_balance": 10000,
+      "profit_loss": 0,
+      "roi_percent": 0.0,
+      "total_trades": 0,
+      "winning_trades": 0,
+      "losing_trades": 0,
+      "win_rate_percent": 0,
+      "max_drawdown_percent": 0.0,
+      "trades_sample": []
+    },
+    "CRUDE_OIL": {
+      "symbol": "CRUDE_OIL",
+      "asset_name": "Crude Oil",
+      "category": "Commodities",
+      "broker_profile": "STANDARD",
+      "initial_balance": 10000,
+      "final_balance": 10266.67,
+      "profit_loss": 266.67,
+      "roi_percent": 2.67,
+      "total_trades": 1,
+      "winning_trades": 1,
+      "losing_trades": 0,
+      "win_rate_percent": 100.0,
+      "max_drawdown_percent": 2.6,
+      "trades_sample": [
+        {
+          "date": "2025-04-22",
+          "type": "BUY",
+          "entry": 63.09500183105469,
+          "exit": 64.35690186767579,
+          "pnl": 266.67,
+          "result": "WIN"
+        }
+      ]
+    }
+  }
+}
